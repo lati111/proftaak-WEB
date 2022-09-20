@@ -27,8 +27,8 @@ class Answer
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $developerData = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->vraag = $developerData["antwoord"];
-            $this->vraag = $developerData["votes"];
+            $this->antwoord = $developerData["antwoord"];
+            $this->votes = $developerData["votes"];
         } else {
             $this->error = "No answer under that id found.";
         }
