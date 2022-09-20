@@ -10,6 +10,7 @@ class Question {
     private int $id;
     private Developer $developer;
     private string $vraag;
+    private $error;
 
     function __construct(int $id)
     {
@@ -36,5 +37,12 @@ class Question {
 
     public function getDeveloper() {
         return $this->developer;
+    }
+
+    public function getError()
+    {
+        $error = $this->error;
+        $this->error = null;
+        return $error;
     }
 }
