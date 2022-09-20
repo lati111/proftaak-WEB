@@ -3,11 +3,12 @@
 namespace Question;
 
 use Database\Database;
+use Developer\Developer;
 use PDO;
 
 class Question {
     private int $id;
-    private int $idDeveloper;
+    private Developer $developer;
     private string $vraag;
 
     function __construct(int $id)
@@ -22,10 +23,18 @@ class Question {
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $developerData = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->idDeveloper = $developerData["idDeveloper"];
+            $this->developer = new Developer($developerData["idDeveloper"]);
             $this->vraag = $developerData["vraag"];
         } else {
             $this->error = "No developer under that id found.";
         }
+    }
+
+    public function getVraag() {
+        return $this->vraag;
+    }
+
+    public function getDeveloper() {
+        return $this->developer;
     }
 }
