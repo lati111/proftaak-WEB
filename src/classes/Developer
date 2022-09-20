@@ -1,10 +1,12 @@
 <?php
 
 namespace Developer;
+
 use Database\Database;
 use PDO;
 
-class Developer {
+class Developer
+{
     private int $id;
     private string $nickname;
     private string $name;
@@ -26,8 +28,7 @@ class Developer {
             $this->name = $developerData["name"];
             $this->nickname = $developerData["nickname"];
             $this->email = $developerData["email"];
-        }
-        else {
+        } else {
             $this->error = "No developer under that id found.";
         }
     }
@@ -52,7 +53,8 @@ class Developer {
         return $this->email;
     }
 
-    public function getError() {
+    public function getError()
+    {
         $error = $this->error;
         $this->error = null;
         return $error;
