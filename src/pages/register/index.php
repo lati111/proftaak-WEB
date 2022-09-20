@@ -11,7 +11,7 @@
 
 <body>
     <h1>Registreer een account</h1>
-    <table>
+    <table id="registerTable">
         <tbody>
             <tr>
                 <td>Gebruikersnaam:</td>
@@ -35,5 +35,8 @@
         </tbody>
     </table>
 </body>
+
+<script src="../../scripts/ajax.js"></script>
+<script src="scripts/register.js"></script>
 
 </html>
