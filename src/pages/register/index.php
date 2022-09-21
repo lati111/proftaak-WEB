@@ -10,33 +10,41 @@
 </head>
 
 <body>
-    <h1>Registreer een account</h1>
+    <h1>Register a developer account</h1>
+    <div regTableError></div>
     <table id="registerTable">
         <tbody>
             <tr>
-                <td>Gebruikersnaam:</td>
+                <td style="font-size: 0.7em;">Fields marked with * are required</td>
+            </tr>
+            <tr>
+                <td>Username:</td>
                 <td><input type="text" name="nickname"></td>
             </tr>
             <tr>
-                <td>Volledige naam:</td>
+                <td>Full name: *</td>
                 <td><input type="text" name="name"></td>
             </tr>
             <tr>
-                <td>Email adres:</td>
+                <td>Email address: *</td>
                 <td><input type="email" name="email"></td>
             </tr>
             <tr>
-                <td>Wachtwoord:</td>
-                <td><input type="password" name="password"></td>
+                <td>Password: *</td>
+                <td><input type="password" name="password1"></td>
             </tr>
             <tr>
-                <td colspan="2"><button>registreer</button></td>
+                <td>Repeat password: *</td>
+                <td><input type="password" name="password2"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button onclick="registerDeveloper()">registreer</button></td>
             </tr>
         </tbody>
     </table>
 </body>
 
-<script src="../../scripts/ajax.js"></script>
-<script src="scripts/register.js"></script>
+<script src="../../src/scripts/ajax.js"></script>
+<script src="register/scripts/register.js"></script>
 
 </html>
