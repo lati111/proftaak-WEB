@@ -11,7 +11,7 @@
 
 <body>
     <h1>Register a developer account</h1>
-    <div regTableError></div>
+    <ul id="regTableError"></ul>
     <table id="registerTable">
         <tbody>
             <tr>
