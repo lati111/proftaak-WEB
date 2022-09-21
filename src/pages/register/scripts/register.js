@@ -3,15 +3,15 @@ const registerFormErrorId = "regTableError";
 async function registerDeveloper() {
     table = document.getElementById("registerTable");
     const name = document.querySelector('[name="name"]').value;
-    const nickname = document.querySelector('[name="nickname"]'.value);
-    const email = document.querySelector('[name="email"]'.value);
-    const password1 = document.querySelector('[name="password1"]'.value);
-    const password2 = document.querySelector('[name="password2"]'.value);
+    const nickname = document.querySelector('[name="nickname"]').value;
+    const email = document.querySelector('[name="email"]').value;
+    const password1 = document.querySelector('[name="password1"]').value;
+    const password2 = document.querySelector('[name="password2"]').value;
 
     errorReset(registerFormErrorId)
 
     let valid = true;
-    if (nickname === undefined) {
+    if (nickname === undefined || nickname === "") {
         nickname = null;
     }
 
@@ -38,8 +38,8 @@ async function registerDeveloper() {
     }
 
     if (password1 !== null) {
-        if (password1.length > 6) {
-            showError(registerFormErrorId, "Password must be longer than 6 characters");
+        if (password1.length < 6) {
+            showError(registerFormErrorId, "Password must be 6 characters or longer");
             valid = false;
         }
         else if (password1 !== password2) {
@@ -52,7 +52,7 @@ async function registerDeveloper() {
     }
 
     if (valid) {
-        console.log(nickname, name, email, password1);
+        const result = await ajax("registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
         return true;
     } else {
         return false;

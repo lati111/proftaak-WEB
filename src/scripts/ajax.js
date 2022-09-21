@@ -5,9 +5,12 @@ async function ajax(Function, Parameters = []) {
 
     const ajaxPath = "/src/backend/ajax.php"
     let promise = await fetch(ajaxPath, {
-        method: 'post',
+        method: 'POST',
         body: formData,
-        headers: {'Accept': 'application/json'}})
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data'
+            }})
         .then((response)=>response.json())
         .then((responseJson)=>{return responseJson});
     return promise;
