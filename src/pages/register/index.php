@@ -22,7 +22,7 @@ session_start();
             </tr>
             <tr>
                 <td>Username:</td>
-                <td><input type="text" name="nickname"></td>
+                <td><input type="text" name="username"></td>
             </tr>
             <tr>
                 <td>Full name: *</td>

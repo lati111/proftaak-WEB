@@ -5,6 +5,7 @@ use Database\Database as Database;;
 function registerDeveloper(string $name, string $email, string $password, string $nickname = null) {
     $q_a = new Database("q&a");
     $db = $q_a->getConn();
+    
 
     $sql = "INSERT INTO developer (DEFAULT, :naam, ";
     if (!is_null($nickname)) {

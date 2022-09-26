@@ -3,7 +3,7 @@ const registerFormErrorId = "regTableError";
 async function registerDeveloper() {
     table = document.getElementById("registerTable");
     const name = document.querySelector('[name="name"]').value;
-    const nickname = document.querySelector('[name="nickname"]').value;
+    const nickname = document.querySelector('[name="username"]').value;
     const email = document.querySelector('[name="email"]').value;
     const password1 = document.querySelector('[name="password1"]').value;
     const password2 = document.querySelector('[name="password2"]').value;
@@ -16,7 +16,7 @@ async function registerDeveloper() {
     }
 
     if (name !== null && name !== "") {
-        if (name.match(/\W+/g)) {
+        if (!name.match(/^[a-zA-Z ]+$/)) {
             showError(registerFormErrorId, "Your name may not include numbers or symbols");
             valid = false;
         }
@@ -27,8 +27,8 @@ async function registerDeveloper() {
     }
 
     if (email !== null) {
-        if (email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-            showError(registerFormErrorId, "Your email may not format compliant");
+        if (!email.match("^[a-zA-Z0-9.!#$%&\\'*+\\/=?^_\\`\\{|\\}~]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")) {
+            showError(registerFormErrorId, "Your email must be format compliant");
             valid = false;
         }
     }

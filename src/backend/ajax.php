@@ -14,7 +14,7 @@ switch ($_POST["function"]) {
     case "registerDeveloper":
         $valid = true;
         if (!is_null($parameters["name"])) {
-            if (!preg_match($parameters["name"], '/\W+/g')) {
+            if (!preg_match('/^[a-zA-Z]+$/', $parameters["name"])) {
                 $response = "Parameter 'name' may not contain numbers or special characters";
                 $valid = false;
             }
@@ -22,7 +22,7 @@ switch ($_POST["function"]) {
             $response = "Parameter 'name' is required";
         }
         if (!is_null($parameters["email"])) {
-            if (!preg_match($parameters["email"], '/^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/')) {
+            if (!preg_match('/^[a-zA-Z0-9.!#$%&\'*+\/=?^_\`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/', $parameters["email"],)) {
                 $response = "Parameter 'email' is not valid";
                 $valid = false;
             }
@@ -35,13 +35,15 @@ switch ($_POST["function"]) {
             $valid = false;
         }
 
+        return $valid . ": " . $response;
         if ($valid) {
-            $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
-            if (!is_int($result)) {
-                $response = $result;
-            } else {
-                $response = true;
-            }
+            return true;
+            // $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
+            // if (!is_int($result)) {
+            //     $response = $result;
+            // } else {
+            //     $response = true;
+            // }
         }
 
         break;
