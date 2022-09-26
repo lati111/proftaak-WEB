@@ -47,7 +47,7 @@ session_start();
     </table>
 </body>
 
-<script src="../../src/scripts/ajax.js"></script>
-<script src="register/scripts/register.js"></script>
+<script src="../../scripts/ajax.js"></script>
+<script src="scripts/register.js"></script>
 
 </html>

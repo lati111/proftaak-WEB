@@ -8,8 +8,7 @@ async function ajax(Function, Parameters = []) {
         method: 'POST',
         body: formData,
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data'
+            'Accept': 'application/json'
             }})
         .then((response)=>response.json())
         .then((responseJson)=>{return responseJson});
