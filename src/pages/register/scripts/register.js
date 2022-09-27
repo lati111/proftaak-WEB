@@ -1,4 +1,5 @@
 const registerFormErrorId = "regTableError";
+const toSrcPath = "../../";
 
 async function registerDeveloper() {
     table = document.getElementById("registerTable");
@@ -52,7 +53,7 @@ async function registerDeveloper() {
     }
 
     if (valid) {
-        const result = await ajax("registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
+        const result = await ajax(toSrcPath, "registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
         return true;
     } else {
         return false;

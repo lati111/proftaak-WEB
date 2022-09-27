@@ -1,9 +1,13 @@
 <?php
 
-namespace Answer;
+declare(strict_types=1);
 
-use Database\Database;
-use Question\Question;
+namespace Modules\Forum\Answer;
+
+require "../../vendor/autoload.php";
+
+use Modules\Database\Database;
+use Modules\Forum\Question\Question;
 use PDO;
 
 class Answer

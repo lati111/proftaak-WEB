@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
-use Database\Database as Database;;
+session_start();
+
+require "../../vendor/autoload.php";
+
+use Modules\Database\Database;
 
 function registerDeveloper(string $name, string $email, string $password, string $nickname = null): array
 {

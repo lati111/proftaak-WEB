@@ -1,8 +1,11 @@
 <?php
+declare (strict_types = 1);
 
-namespace Developer;
+namespace Modules\Developer;
 
-use Database\Database;
+require "../../vendor/autoload.php";
+
+use Modules\Database\Database;
 use PDO;
 
 class Developer

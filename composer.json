@@ -2,7 +2,9 @@
     "name": "jvzel/proftaak-web",
     "autoload": {
         "psr-4": {
-            "Jvzel\\ProftaakWeb\\": "src/"
+            "Modules\\Database\\": "src/backend/modules/Database",
+            "Modules\\Forum\\": "src/backend/modules/Forum",
+            "Modules\\Users\\": "src/backend/modules/Users"
         }
     },
     "authors": [

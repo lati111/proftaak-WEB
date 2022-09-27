@@ -1,12 +1,17 @@
 <?php
 
-namespace Question;
+declare(strict_types=1);
 
-use Database\Database;
-use Developer\Developer;
+namespace Modules\Forum\Question;
+
+require "../../vendor/autoload.php";
+
+use Modules\Database\Database as Database;
+use Modules\Developer\Developer;
 use PDO;
 
-class Question {
+class Question
+{
     private int $id;
     private Developer $developer;
     private string $vraag;
@@ -31,11 +36,13 @@ class Question {
         }
     }
 
-    public function getVraag() {
+    public function getVraag()
+    {
         return $this->vraag;
     }
 
-    public function getDeveloper() {
+    public function getDeveloper()
+    {
         return $this->developer;
     }
 

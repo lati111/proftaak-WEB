@@ -1,9 +1,12 @@
-async function ajax(Function, Parameters = []) {
+async function ajax(rootpath, Function, Parameters = []) {
     let formData = new FormData();
     formData.append('function', Function);
     formData.append('parameters', JSON.stringify(Parameters));
 
-    const ajaxPath = "/src/backend/ajax.php"
+    if (typeof variable !== 'undefined') {
+        console.error("rootpath variable not found")
+    }
+    const ajaxPath = rootpath + "backend/ajax.php";
     let promise = await fetch(ajaxPath, {
         method: 'POST',
         body: formData,
