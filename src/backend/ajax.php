@@ -41,6 +41,10 @@ switch ($_POST["function"]) {
 
         if ($valid) {
             $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
+            
+            if ($result === false) {
+                $response = $_SESSION["error"];
+            }
         }
 
         break;
