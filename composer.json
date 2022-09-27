@@ -1,0 +1,15 @@
+{
+    "name": "jvzel/proftaak-web",
+    "autoload": {
+        "psr-4": {
+            "Jvzel\\ProftaakWeb\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lati111",
+            "email": "jvzelst111@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -37,14 +37,8 @@ switch ($_POST["function"]) {
             $valid = false;
         }
 
-        return $valid . ": " . $response;
         if ($valid) {
-            // $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
-            // if (!is_int($result)) {
-            //     $response = $result;
-            // } else {
-            //     $response = true;
-            // }
+            $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
         }
 
         break;

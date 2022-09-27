@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Database;
 use PDO;
@@ -8,11 +9,10 @@ class Database {
 
     public function __construct($dbname)
     {
-        $data = json_decode(file_get_contents("../../config.json"), true, 512, JSON_THROW_ON_ERROR)["database"];
         $this->PDO = new PDO("mysql:host=localhost;dbname=$dbname", "root", "");
     }
 
-    public function getConn()
+    public function getConn(): PDO
     {
         return $this->PDO;
     }
