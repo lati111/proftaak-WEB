@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 use Database\Database as Database;;
 
-function registerDeveloper(string $name, string $email, string $password, string $nickname = null) {
+function registerDeveloper(string $name, string $email, string $password, string $nickname = null): array
+{
     $q_a = new Database("q&a");
     $db = $q_a->getConn();
-    
+
 
     $sql = "INSERT INTO developer (DEFAULT, :naam, ";
     if (!is_null($nickname)) {
         $sql .= ":nickname";
-    } 
-    else {
-        $sql .= "NULL"; 
+    } else {
+        $sql .= "NULL";
     }
     $sql .= ", :email, :password";
 
@@ -25,9 +27,5 @@ function registerDeveloper(string $name, string $email, string $password, string
     }
     if (!$stmt->execute()) {
         return $db->errorInfo();
-    } 
-    else {
-        return $db->lastInsertId();
     }
-    
 }

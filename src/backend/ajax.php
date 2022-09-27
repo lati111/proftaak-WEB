@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 session_start();
 
 include "functions/developerFunctions.php";
@@ -14,7 +16,7 @@ switch ($_POST["function"]) {
     case "registerDeveloper":
         $valid = true;
         if (!is_null($parameters["name"])) {
-            if (!preg_match('/^[a-zA-Z]+$/', $parameters["name"])) {
+            if (!preg_match('/^[a-zA-Z ]+$/', $parameters["name"])) {
                 $response = "Parameter 'name' may not contain numbers or special characters";
                 $valid = false;
             }
@@ -37,7 +39,6 @@ switch ($_POST["function"]) {
 
         return $valid . ": " . $response;
         if ($valid) {
-            return true;
             // $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
             // if (!is_int($result)) {
             //     $response = $result;
