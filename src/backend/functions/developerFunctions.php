@@ -20,6 +20,13 @@ function registerDeveloper(string $name, string $email, string $password, string
     }
     $sql .= ", :email, :password)";
 
+    $password = sodium_crypto_pwhash_str(
+        $password, 
+        SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, 
+        SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE
+    );
+    
+
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":username", $name);
     $stmt->bindParam(":email", $email);

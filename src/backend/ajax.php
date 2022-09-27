@@ -10,6 +10,7 @@ include "functions/developerFunctions.php";
 $parameters = [];
 try {
     $parameters = json_decode($_POST["parameters"], true, 512, JSON_THROW_ON_ERROR);
+    unset($_POST["parameters"]);
 } catch (JsonException $e) {
 }
 
@@ -18,6 +19,7 @@ switch ($_POST["function"]) {
     case "registerDeveloper":
         $valid = true;
         if (!is_null($parameters["name"])) {
+
             if (!preg_match('/^[a-zA-Z ]+$/', $parameters["name"])) {
                 $response = "Parameter 'name' may not contain numbers or special characters";
                 $valid = false;
