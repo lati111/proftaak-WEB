@@ -19,7 +19,7 @@ function registerDeveloper(string $name, string $email, string $password, string
         $sql .= "NULL";
     }
     $sql .= ", :email, :password)";
-// echo $sql;
+
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":username", $name);
     $stmt->bindParam(":email", $email);
