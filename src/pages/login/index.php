@@ -17,13 +17,15 @@ session_start();
 <body>
     <section id="loginSection">
         <h1>Log in</h1>
+        <ul id="loginError"></ul>
         <div id="loginForm">
             <div><input type="email" name="email" placeholder="Email..."></div>
             <div><input type="password" name="password" placeholder="Password..."></div>
-            <div><button>Log in</button></div>
+            <div><button onclick="login()">Log in</button></div>
         </div>
     </section>
 
 </body>
 
 <script src="../../scripts/ajax.js"></script>
+<script src="scripts/login.js"></script>

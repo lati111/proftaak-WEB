@@ -4,7 +4,7 @@
         "psr-4": {
             "Modules\\Database\\": "src/backend/modules/Database",
             "Modules\\Forum\\": "src/backend/modules/Forum",
-            "Modules\\Users\\": "src/backend/modules/Users"
+            "Modules\\Developer\\": "src/backend/modules/Users"
         }
     },
     "authors": [

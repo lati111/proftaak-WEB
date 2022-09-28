@@ -2,12 +2,12 @@ const registerFormErrorId = "regTableError";
 const toSrcPath = "../../";
 
 async function registerDeveloper() {
-    table = document.getElementById("registerTable");
-    const name = document.querySelector('[name="name"]').value;
-    const nickname = document.querySelector('[name="username"]').value;
-    const email = document.querySelector('[name="email"]').value;
-    const password1 = document.querySelector('[name="password1"]').value;
-    const password2 = document.querySelector('[name="password2"]').value;
+    const table = document.getElementById("registerTable");
+    const name = table.querySelector('[name="name"]').value;
+    const nickname = table.querySelector('[name="username"]').value;
+    const email = table.querySelector('[name="email"]').value;
+    const password1 = table.querySelector('[name="password1"]').value;
+    const password2 = table.querySelector('[name="password2"]').value;
 
     errorReset(registerFormErrorId)
 
@@ -53,8 +53,7 @@ async function registerDeveloper() {
     }
 
     if (valid) {
-        // const result = await ajax(toSrcPath, "registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
-        const result = true
+        const result = await ajax(toSrcPath, "registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
         if (result === true) {
             document.querySelector("#registerSection").style.display = "none";
             document.querySelector("#registeredSection").style.display = "block";

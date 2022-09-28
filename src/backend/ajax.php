@@ -55,10 +55,7 @@ switch ($_POST["function"]) {
             $response = "Parameter 'password' cannot be empty";
         } else {
             $result = login($parameters["email"], $parameters["password"]);
-
-            if ($result === false) {
-                $response = $_SESSION["error"];
-            }
+            $response = $result;
         }
         break;
     default:

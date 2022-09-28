@@ -7,7 +7,7 @@ require "../../vendor/autoload.php";
 use Modules\Database\Database;
 use Modules\Developer\Developer;
 
-function login(string $email, string $password) {
+function login(string $email, string $password): bool {
     $q_a = new Database("q&a");
     $db = $q_a->getConn();
 
@@ -22,7 +22,6 @@ function login(string $email, string $password) {
     } else {
         return false;
     }
-
 }
 
 function registerDeveloper(string $name, string $email, string $password, string $nickname = null): bool

@@ -22,13 +22,13 @@ class Developer
         $q_a = new Database("q&a");
         $db = $q_a->getConn();
 
-        $sql = "SELECT name, nickname, email FROM developer WHERE idDeveloper = :id";
+        $sql = "SELECT naam, nickname, email FROM developer WHERE idDeveloper = :id";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $developerData = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->name = $developerData["name"];
+            $this->name = $developerData["naam"];
             $this->nickname = $developerData["nickname"];
             $this->email = $developerData["email"];
         } else {
