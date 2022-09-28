@@ -54,7 +54,11 @@ async function registerDeveloper() {
 
     if (valid) {
         const result = await ajax(toSrcPath, "registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
-        return true;
+        if (result === true) {
+            window.location.href = "../login";
+        } else {
+            return false;
+        }
     } else {
         return false;
     }
