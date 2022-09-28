@@ -51,9 +51,14 @@ switch ($_POST["function"]) {
     case "developerLogin":
         if (is_null($parameters["email"])) {
             $response = "Parameter 'email' cannot be empty";
-        } 
-        else if (is_null($parameters["password"])) {
+        } else if (is_null($parameters["password"])) {
             $response = "Parameter 'password' cannot be empty";
+        } else {
+            $result = login($parameters["email"], $parameters["password"]);
+
+            if ($result === false) {
+                $response = $_SESSION["error"];
+            }
         }
         break;
     default:
