@@ -53,9 +53,9 @@ session_start();
     <section id="registeredSection" style="display: none;">
         <h1>Registratie succesvol!</h1>
         <div>
-            <span>Klik </span>
-            <span><a href="../login">hier</a></span>
-            <span>om in te loggen</span>
+            <span>Click </span>
+            <span><a href="../login">here</a></span>
+            <span> to log in</span>
         </div>
     </section>
 

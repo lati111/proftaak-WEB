@@ -15,6 +15,14 @@ session_start();
 </head>
 
 <body>
+    <section id="loginSection">
+        <h1>Log in</h1>
+        <div id="loginForm">
+            <div><input type="email" name="email" placeholder="Email..."></div>
+            <div><input type="password" name="password" placeholder="Password..."></div>
+            <div><button>Log in</button></div>
+        </div>
+    </section>
 
 </body>
 
