@@ -15,7 +15,7 @@ session_start();
 
 </head>
 
-<body>
+<body onload="init()">
     <section id="header">
         <div id="bannerSection">
             <h1>Proftaak forums</h1>
@@ -30,5 +30,8 @@ session_start();
     </section>
 
 </body>
+
+<script src="../../scripts/ajax.js"></script>
+<script src="scripts/forum.js"></script>
 
 </html>

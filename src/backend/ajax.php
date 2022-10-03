@@ -6,6 +6,7 @@ session_start();
 require "../../vendor/autoload.php";
 
 include "functions/developerFunctions.php";
+include "functions/forumFunctions.php";
 
 $parameters = [];
 try {
@@ -58,7 +59,10 @@ switch ($_POST["function"]) {
             $response = $result;
         }
         break;
-    default:
+    case "getQuestionCount":
+            $response = getQuestionCount();
+        break;
+        default:
         $response = "No such function available";
         break;
 }
