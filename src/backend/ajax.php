@@ -55,14 +55,36 @@ switch ($_POST["function"]) {
         } else if (is_null($parameters["password"])) {
             $response = "Parameter 'password' cannot be empty";
         } else {
-            $result = login($parameters["email"], $parameters["password"]);
-            $response = $result;
+            $response = login($parameters["email"], $parameters["password"]);
         }
         break;
     case "getQuestionCount":
-            $response = getQuestionCount();
+        $response = getQuestionCount();
         break;
-        default:
+    case "getQuestions":
+        if (!is_null($parameters["offset"])) {
+            if (!is_int($parameters["offset"])) {
+                $response = "Parameter 'offset' must be an int";
+            break;
+            }
+        } else {
+            $response = "Parameter 'offset' cannot be empty";
+            break;
+        }
+
+        if (!is_null($parameters["amount"])) {
+            if (!is_int($parameters["amount"])) {
+                $response = "Parameter 'amount' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'amount' cannot be empty";
+            break;
+        }
+
+        $response = getQuestions($parameters["offset"], $parameters["amount"]);
+        break;
+    default:
         $response = "No such function available";
         break;
 }
