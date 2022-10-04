@@ -26,7 +26,22 @@ session_start();
     </section>
 
     <section id="mainBody">
-        <div id="forumTableContainer"></div>
+        <div id="forumTableContainer">
+            <table id="forum">
+
+            </table>
+            <div id="pageNav">
+                <span><button name="navButton" value="-1">&#60;</button></span>
+                <span id="pageButton1"><button>1</button></span>
+                <span id="pageButton2">...</span>
+                <span id="pageButton3"><button>14</button></span>
+                <span id="pageButton4"><button>15</button></span>
+                <span id="pageButton5"><button>16</button></span>
+                <span id="pageButton6">...</span>
+                <span id="pageButton7"><button>44</button></span>
+                <span><button name="navButton" value="+1">&#62;</button></span>
+            </div>
+        </div>
     </section>
 
 </body>

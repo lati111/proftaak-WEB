@@ -16,6 +16,7 @@ function login(string $email, string $password): bool {
     $stmt->bindParam(":email", $email);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if(sodium_crypto_pwhash_str_verify($row["password"], $password)) {
         $_SESSION["user"] = new Developer($row["idDeveloper"]);
         return true;
