@@ -6,7 +6,7 @@ require "../../vendor/autoload.php";
 
 use Modules\Database\Database;
 use Modules\Forum\Answer\Answer;
-use Modules\Forum\Question\Question;
+use Modules\Forum\Question;
 
 function getQuestionCount(): int {
     $q_a = new Database("q&a");

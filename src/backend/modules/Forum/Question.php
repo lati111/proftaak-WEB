@@ -36,6 +36,18 @@ class Question
         }
     }
 
+    public function getAnswers():array
+    {
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $sql = "SELECT * FROM answer WHERE idQuestion = :ID";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":ID", $this->id);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getVraag()
     {
         return $this->vraag;

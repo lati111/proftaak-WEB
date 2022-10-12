@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
+use Modules\Forum\Question\Question as Question;
+
 session_start();
 
 require "../../vendor/autoload.php";
@@ -82,7 +85,17 @@ switch ($_POST["function"]) {
             break;
         }
 
-        $response = getQuestions($parameters["offset"], $parameters["amount"]);
+        $questions = getQuestions($parameters["offset"], $parameters["amount"]);
+        $response = [];
+        foreach ($questions as $questionArray) {
+            $data = [];
+            $data["ID"] = $questionArray["idQuestion"];
+            $data["vraag"] = $questionArray["vraag"];
+
+            $question = new Question($data["ID"]);
+            $data["answerCount"] = count($question->getAnswers());
+            $response[] = $data;
+        }
         break;
     default:
         $response = "No such function available";
