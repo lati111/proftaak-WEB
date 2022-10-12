@@ -7,7 +7,8 @@ require "../../vendor/autoload.php";
 use Modules\Database\Database;
 use Modules\Developer\Developer;
 
-function login(string $email, string $password): bool {
+function login(string $email, string $password): bool
+{
     $q_a = new Database("q&a");
     $db = $q_a->getConn();
 
@@ -17,7 +18,7 @@ function login(string $email, string $password): bool {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if(sodium_crypto_pwhash_str_verify($row["password"], $password)) {
+    if (sodium_crypto_pwhash_str_verify($row["password"], $password)) {
         $_SESSION["user"] = new Developer($row["idDeveloper"]);
         return true;
     } else {
@@ -38,24 +39,30 @@ function registerDeveloper(string $name, string $email, string $password, string
     }
     $sql .= ", :email, :password)";
 
-    $password = sodium_crypto_pwhash_str(
-        $password, 
-        SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE, 
-        SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE
-    );
-    
-
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(":username", $name);
-    $stmt->bindParam(":email", $email);
-    $stmt->bindParam(":password", $password);
-    if (!is_null($nickname)) {
-        $stmt->bindParam(":nickname", $nickname);
-    }
-    if (!$stmt->execute()) {
-        $_SESSION["error"] = $stmt->errorInfo();
+    try {
+        $password = sodium_crypto_pwhash_str(
+            $password,
+            SODIUM_CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,
+            SODIUM_CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE
+        );
+    } catch (SodiumException $e) {
+        throw $e;
         return false;
-    } else {
-        return true;
     }
+
+
+    try {
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":username", $name);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":password", $password);
+        if (!is_null($nickname)) {
+            $stmt->bindParam(":nickname", $nickname);
+        }
+        $stmt->execute();
+    } catch (PDOException $e) {
+        throw $e;
+        return false;
+    }
+    return true;
 }

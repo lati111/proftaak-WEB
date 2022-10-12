@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Monolog\Level as Level;
+use Monolog\Logger as Logger;
+use Monolog\Handler\StreamHandler as StreamHandler;
 use Modules\Forum\Question\Question as Question;
 
 session_start();
@@ -11,11 +14,16 @@ require "../../vendor/autoload.php";
 include "functions/developerFunctions.php";
 include "functions/forumFunctions.php";
 
+$log = new Logger('name');
+$log->pushHandler(new StreamHandler('../log.txt', Level::Warning));
+
 $parameters = [];
 try {
     $parameters = json_decode($_POST["parameters"], true, 512, JSON_THROW_ON_ERROR);
     unset($_POST["parameters"]);
 } catch (JsonException $e) {
+    $response = "An error has occured, please try again later";
+    $log->error($e->getMessage());
 }
 
 $response = "";
@@ -43,13 +51,29 @@ switch ($_POST["function"]) {
             $response = "Parameter 'password' is required";
             $valid = false;
         }
+        if (is_null($parameters["repeatPassword"])) {
+            $response = "Parameter 'repeatPassword' is required";
+            $valid = false;
+        } else if ($parameters["password"] !== $parameters["repeatPassword"]) {
+            $response = "Passwords must match";
+            $valid = false;
+        }
 
         if ($valid) {
-            $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
-
-            if ($result === false) {
-                $response = $_SESSION["error"];
+            try {
+                $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
+            } catch (Exception $e) {
+                switch ($e->getCode()) {
+                    case "23000":
+                        $response = "E-23000";
+                        break;
+                    default:
+                        $response = "An error has occured, please try again later";
+                        break;
+                }
+                $log->error($e->getMessage());
             }
+            $response = true;
         }
         break;
     case "developerLogin":
@@ -104,4 +128,6 @@ switch ($_POST["function"]) {
 try {
     echo json_encode($response, JSON_THROW_ON_ERROR);
 } catch (JsonException $e) {
+    $response = "An error has occured, please try again later";
+    $log->error($e->getMessage());
 }

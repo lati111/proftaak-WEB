@@ -53,13 +53,17 @@ async function registerDeveloper() {
     }
 
     if (valid) {
-        const result = await ajax(toSrcPath, "registerDeveloper", {"nickname": nickname, "name": name, "email": email, "password": password1});
-        if (result === true) {
-            document.querySelector("#registerSection").style.display = "none";
-            document.querySelector("#registeredSection").style.display = "block";
-            return true
-        } else {
-            return false;
+        const result = await ajax(toSrcPath, "registerDeveloper", { "nickname": nickname, "name": name, "email": email, "password": password1, "repeatPassword": password2});
+        switch (result) {
+            case true:
+                document.querySelector("#registerSection").style.display = "none";
+                document.querySelector("#registeredSection").style.display = "block";
+                return true;
+            case "E-23000":
+                showError(registerFormErrorId, "An email address may only be used once");
+                return false;
+            default:
+                return false;
         }
     } else {
         return false;

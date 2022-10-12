@@ -1,0 +1,8 @@
+[2022-10-12T12:16:50.563951+02:00] name.ERROR: error [] []
+[2022-10-12T12:19:14.686993+02:00] name.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'q&a.developere' doesn't exist [] []
+[2022-10-12T12:19:32.417352+02:00] name.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'q&a.developere' doesn't exist [] []
+[2022-10-12T12:22:56.550024+02:00] name.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'q&a.developere' doesn't exist [] []
+[2022-10-12T12:25:12.359750+02:00] name.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'q&a.developere' doesn't exist [] []
+[2022-10-12T12:25:41.389465+02:00] name.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'email1@email.com' for key 'email' [] []
+[2022-10-12T12:26:55.309260+02:00] name.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'email1@email.com' for key 'email' [] []
+[2022-10-12T12:28:55.566243+02:00] name.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'email1@email.com' for key 'email' [] []
