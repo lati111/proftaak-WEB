@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Modules\Forum\Answer\Answer;
 use Monolog\Level as Level;
 use Monolog\Logger as Logger;
 use Monolog\Handler\StreamHandler as StreamHandler;
@@ -159,7 +160,73 @@ switch ($_POST["function"]) {
         }
         break;
 
-    
+    case "getAnswers":
+        if (!is_null($parameters["offset"])) {
+            if (!is_int($parameters["offset"])) {
+                $response = "Parameter 'offset' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'offset' cannot be empty";
+            break;
+        }
+
+        if (!is_null($parameters["amount"])) {
+            if (!is_int($parameters["amount"])) {
+                $response = "Parameter 'amount' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'amount' cannot be empty";
+            break;
+        }
+
+        if (!is_null($parameters["questionID"])) {
+            if (!is_int($parameters["questionID"])) {
+                $response = "Parameter 'questionID' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'questionID' cannot be empty";
+            break;
+        }
+
+        try {
+            $response = [];
+            $question = new Question($parameters["questionID"]);
+            $answers = $question->getAnswers();
+
+                    
+            foreach ($answers as $answerData) {
+                $data = [];
+                $data["ID"] = $answer["idAnswer"];
+                $data["antwoord"] = $answer["antwoord"];
+                $data["votes"] = $answer["votes"];
+                $response[] = $data;
+
+                $answer = new Answer($answer["idAnswer"], $question);
+                if(is_a($_SESSION["user"], "Developer")) {
+                    $_SESSION["user"]->HasVoted($answer);
+                } else {
+                    $data["hasVoted"] = false;
+                }
+            }
+
+        } catch (Exception | TypeError $e) {
+            switch ($e->getCode()) {
+                case 1:
+                    $response = $e->getMessage();
+                    $log->error("user searched for question with ID " . $data["ID"] . ", no question with that ID found");
+                    break;
+                default:
+                    $response = "An error has occured, please try again later";
+                    $log->error($e->getMessage());
+                    break;
+            }
+        }
+
+
+        break;
     default:
     $response = "No such function available";
     break;

@@ -38,6 +38,11 @@ class Answer
         }
     }
 
+    public function getID()
+    {
+        return $this->ID;
+    }
+
     public function getVraag()
     {
         return $this->vraag;

@@ -48,6 +48,11 @@ session_start();
     <section id="questionBody" class="hidden">
         <div id="question"></div>
         <div id="answerContainer">
+            <div id="answerForum">
+
+            </div>
+        </div>
+        <div id="answerNav">
             <table id="answerTable">
                 <span><button name="navButton" value="-1" onclick="setAnswerPage('-1')">&#60;</button></span>
                 <span id="pageAnswerButton1"></span>
