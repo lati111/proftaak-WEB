@@ -6,6 +6,7 @@ namespace Modules\Forum\Question;
 
 require "../../vendor/autoload.php";
 
+use Exception;
 use Modules\Database\Database as Database;
 use Modules\Developer\Developer;
 use PDO;
@@ -15,7 +16,6 @@ class Question
     private int $id;
     private Developer $developer;
     private string $vraag;
-    private $error;
 
     function __construct(int $id)
     {
@@ -32,11 +32,11 @@ class Question
             $this->developer = new Developer($developerData["idDeveloper"]);
             $this->vraag = $developerData["vraag"];
         } else {
-            $this->error = "No developer under that id found.";
+            throw new Exception("No developer under that id found", 1);
         }
     }
 
-    public function getAnswers():array
+    public function getAnswers(): array
     {
         $q_a = new Database("q&a");
         $db = $q_a->getConn();
@@ -56,12 +56,5 @@ class Question
     public function getDeveloper()
     {
         return $this->developer;
-    }
-
-    public function getError()
-    {
-        $error = $this->error;
-        $this->error = null;
-        return $error;
     }
 }

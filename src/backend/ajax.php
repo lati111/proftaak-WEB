@@ -68,7 +68,7 @@ switch ($_POST["function"]) {
                         $response = "E-23000";
                         break;
                     default:
-                    $log->error($e->getMessage());
+                        $log->error($e->getMessage());
                         $response = "An error has occured, please try again later";
                         break;
                 }
@@ -96,13 +96,18 @@ switch ($_POST["function"]) {
         }
         break;
     case "getQuestionCount":
-        $response = getQuestionCount();
+        try {
+            $response = getQuestionCount();
+        } catch (Exception $e) {
+            $response = "An error has occured, please try again later";
+            $log->error($e->getMessage());
+        }
         break;
     case "getQuestions":
         if (!is_null($parameters["offset"])) {
             if (!is_int($parameters["offset"])) {
                 $response = "Parameter 'offset' must be an int";
-            break;
+                break;
             }
         } else {
             $response = "Parameter 'offset' cannot be empty";
@@ -119,15 +124,37 @@ switch ($_POST["function"]) {
             break;
         }
 
-        $questions = getQuestions($parameters["offset"], $parameters["amount"]);
+        try {
+            $questions = getQuestions($parameters["offset"], $parameters["amount"]);
+        } catch (Exception | TypeError $e) {
+            $response = "An error has occured, please try again later";
+            $log->error($e->getMessage());
+        }
         $response = [];
         foreach ($questions as $questionArray) {
             $data = [];
             $data["ID"] = $questionArray["idQuestion"];
             $data["vraag"] = $questionArray["vraag"];
 
-            $question = new Question($data["ID"]);
-            $data["answerCount"] = count($question->getAnswers());
+            try {
+                $question = new Question($data["ID"]);
+            } catch (Exception | TypeError $e) {
+                switch ($e->getCode()) {
+                    case 1:
+                        $response = $e->getMessage();
+                        $log->error("user searched for answer with ID" . $data["ID"] . ", no answer with that ID found");
+                    default:
+                        $response = "An error has occured, please try again later";
+                        $log->error($e->getMessage());
+                        break;
+                }   
+            }
+            try {
+                $data["answerCount"] = count($question->getAnswers());
+            } catch (Exception $e) {
+                $response = "An error has occured, please try again later";
+                $log->error($e->getMessage());
+            }
             $response[] = $data;
         }
         break;

@@ -6,6 +6,7 @@ namespace Modules\Forum\Answer;
 
 require "../../vendor/autoload.php";
 
+use Exception;
 use Modules\Database\Database;
 use Modules\Forum\Question\Question;
 use PDO;
@@ -16,7 +17,6 @@ class Answer
     private Question $question;
     private string $antwoord;
     private int $votes;
-    private $error;
 
     function __construct(int $id, Question $question)
     {
@@ -34,7 +34,7 @@ class Answer
             $this->antwoord = $developerData["antwoord"];
             $this->votes = $developerData["votes"];
         } else {
-            $this->error = "No answer under that id found.";
+            throw new Exception("No answer under that id found", 1);
         }
     }
 
@@ -46,12 +46,5 @@ class Answer
     public function getDeveloper()
     {
         return $this->developer;
-    }
-
-    public function getError()
-    {
-        $error = $this->error;
-        $this->error = null;
-        return $error;
     }
 }
