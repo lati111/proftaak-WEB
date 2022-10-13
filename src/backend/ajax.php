@@ -62,12 +62,13 @@ switch ($_POST["function"]) {
         if ($valid) {
             try {
                 $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
-            } catch (Exception $e) {
+            } catch (Exception | TypeError $e) {
                 switch ($e->getCode()) {
                     case "23000":
                         $response = "E-23000";
                         break;
                     default:
+                    $log->error($e->getMessage());
                         $response = "An error has occured, please try again later";
                         break;
                 }
@@ -82,7 +83,16 @@ switch ($_POST["function"]) {
         } else if (is_null($parameters["password"])) {
             $response = "Parameter 'password' cannot be empty";
         } else {
-            $response = login($parameters["email"], $parameters["password"]);
+            try {
+                $response = login($parameters["email"], $parameters["password"]);
+            } catch (Exception | TypeError $e) {
+                switch ($e->getCode()) {
+                    default:
+                        $log->error($e->getMessage());
+                        $response = "An error has occured, please try again later";
+                        break;
+                }
+            }
         }
         break;
     case "getQuestionCount":

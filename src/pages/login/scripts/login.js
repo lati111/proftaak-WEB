@@ -14,7 +14,11 @@ async function login() {
         showError(loginFormErrorId, "Password must be filled in");
     } else {
         const result = await ajax(toSrcPath, "developerLogin", {"email": email, "password": password });
-        console.log(result);
+        if (result === true){
+            window.location.href = "../forum";
+        } else if (result !== false) {
+            showError(loginFormErrorId, result); 
+        }
     }
 }
 
