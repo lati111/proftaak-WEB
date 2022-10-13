@@ -23,7 +23,7 @@ function getQuestions(int $offset, int $amount): array {
     $q_a = new Database("q&a");
     $db = $q_a->getConn();
 
-    $sql = "SELECT * FROM question LIMIT :amount OFFSET :offset";
+    $sql = "SELECT * FROM question ORDER BY idQuestion DESC LIMIT :amount OFFSET :offset";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(":offset",$offset, PDO::PARAM_INT);
     $stmt->bindValue(":amount", $amount, PDO::PARAM_INT);
