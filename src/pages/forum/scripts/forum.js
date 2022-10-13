@@ -1,67 +1,95 @@
 const toSrcPath = "../../";
 let questionTotal;
+let pageQuestionTotal
 let perPage = 10;
-let currPage = 1;
+let currQuestionPage = 1;
+let currQuestions;
 
 async function init() {
     questionTotal = await ajax(toSrcPath, "getQuestionCount");
-    setPage(1);
-    setPages();
-
+    setQuestionPage(1);
+    setQuestionPageNav();
 }
 
-async function setPage(pageNr) {
-    currPage = pageNr;
-    const questions = await ajax(toSrcPath, "getQuestions", { "offset": ((currPage * perPage) - perPage), "amount": perPage });
+async function openQuestion(questionID) {
+    console.log(questionID);
+}
+
+async function setQuestionPage(pageNr) {
+    if (pageNr === "+1") {
+        if (currQuestionPage === pageQuestionTotal) {
+            return;
+        }
+        currQuestionPage++;
+    } else if (pageNr === "-1") {
+        if (currQuestionPage === 1) {
+            return;
+        }
+        currQuestionPage--;
+    } else {
+        currQuestionPage = pageNr;
+    }
+
+    document.querySelector("#forum").innerHTML = "";
+    currQuestions = [];
+    const questions = await ajax(toSrcPath, "getQuestions", { "offset": ((currQuestionPage * perPage) - perPage), "amount": perPage });
     questions.forEach(question => {
+        currQuestions[question["ID"]] = question;
         const row = document.createElement("tr");
+        row.setAttribute("onclick", "openQuestion("+question["ID"]+")");
         row.classList.add("forumRow")
+        row.id = "question-" + question["ID"]
+
         const vraag = document.createElement("td");
         vraag.textContent = question["vraag"];
         row.append(vraag)
-        document.querySelector("#forum").append(row)
 
-        console.log(question)
+        const answers = document.createElement("td");
+        answers.textContent = question["answerCount"];
+        row.append(answers)
+
+        document.querySelector("#forum").append(row)
     });
 }
 
-function setPages() {
-    const pageTotal = Math.ceil(questionTotal / perPage);
+function setQuestionPageNav() {
+    pageQuestionTotal = Math.ceil(questionTotal / perPage);
     let buttonIndex = 1;
-    for (let i = (currPage - 3); i < (currPage + 3); i++) {
+    for (let i = (currQuestionPage - 3); i < (currQuestionPage + 3); i++) {
         if (i < 1) { continue }
         const button = document.createElement("button");
         button.value = i;
         button.textContent = i;
-        document.querySelector("#pageButton" + buttonIndex).innerHTML = "";
-        document.querySelector("#pageButton" + buttonIndex).append(button);
+        document.querySelector("#pageQuestionButton" + buttonIndex).innerHTML = "";
+        document.querySelector("#pageQuestionButton" + buttonIndex).append(button);
+        button.setAttribute("onclick", "setQuestionPage(" + i + ")");
         buttonIndex++
     }
-    if (pageTotal < 7) {
-        for (let i = (pageTotal + 1); i < 8; i++) {
-            document.querySelector("#pageButton" + i).innerHTML = "";
+    if (pageQuestionTotal < 7) {
+        for (let i = (pageQuestionTotal + 1); i < 8; i++) {
+            document.querySelector("#pageQuestionButton" + i).innerHTML = "";
         }
     } else {
-        if (currPage > 4) {
+        if (currQuestionPage > 4) {
             const button = document.createElement("button");
             button.value = 1;
             button.textContent = 1;
 
-            document.querySelector("#pageButton1").innerHTML = "";
-            document.querySelector("#pageButton1").append(button);
+            document.querySelector("#pageQuestionButton1").innerHTML = "";
+            document.querySelector("#pageQuestionButton1").append(button);
 
-            document.querySelector("#pageButton2").innerHTML = "...";
+            document.querySelector("#pageQuestionButton2").innerHTML = "...";
         }
 
-        if (currPage < (pageTotal - 3)) {
+        if (currQuestionPage < (pageQuestionTotal - 3)) {
             const button = document.createElement("button");
-            button.value = pageTotal;
-            button.textContent = pageTotal;
+            button.value = pageQuestionTotal;
+            button.textContent = pageQuestionTotal;
 
-            document.querySelector("#pageButton6").innerHTML = "...";
+            document.querySelector("#pageQuestionButton6").innerHTML = "...";
 
-            document.querySelector("#pageButton7").innerHTML = "";
-            document.querySelector("#pageButton7").append(button);
+            document.querySelector("#pageQuestionButton7").innerHTML = "";
+            document.querySelector("#pageQuestionButton7").append(button);
         }
     }
 

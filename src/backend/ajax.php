@@ -158,9 +158,11 @@ switch ($_POST["function"]) {
             $response[] = $data;
         }
         break;
+
+    
     default:
-        $response = "No such function available";
-        break;
+    $response = "No such function available";
+    break;
 }
 try {
     echo json_encode($response, JSON_THROW_ON_ERROR);

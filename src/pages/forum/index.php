@@ -13,6 +13,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proftaak forum</title>
 
+    <link rel="stylesheet" href="../../styles/main.css">
 </head>
 
 <body onload="init()">
@@ -31,22 +32,39 @@ session_start();
 
             </table>
             <div id="pageNav">
-                <span><button name="navButton" value="-1">&#60;</button></span>
-                <span id="pageButton1"><button>1</button></span>
-                <span id="pageButton2">2</span>
-                <span id="pageButton3"><button>3</button></span>
-                <span id="pageButton4"><button>4</button></span>
-                <span id="pageButton5"><button>5</button></span>
-                <span id="pageButton6">...</span>
-                <span id="pageButton7"><button>44</button></span>
-                <span><button name="navButton" value="+1">&#62;</button></span>
+                <span><button name="navButton" value="-1" onclick="setQuestionPage('-1')">&#60;</button></span>
+                <span id="pageQuestionButton1"></span>
+                <span id="pageQuestionButton2"></span>
+                <span id="pageQuestionButton3"></span>
+                <span id="pageQuestionButton4"></span>
+                <span id="pageQuestionButton5"></span>
+                <span id="pageQuestionButton6"></span>
+                <span id="pageQuestionButton7"></span>
+                <span><button name="navButton" value="+1" onclick="setQuestionPage('+1')">&#62;</button></span>
             </div>
         </div>
     </section>
 
+    <section id="questionBody" class="hidden">
+        <div id="question"></div>
+        <div id="answerContainer">
+            <table id="answerTable">
+                <span><button name="navButton" value="-1" onclick="setAnswerPage('-1')">&#60;</button></span>
+                <span id="pageAnswerButton1"></span>
+                <span id="pageAnswerButton2"></span>
+                <span id="pageAnswerButton3"></span>
+                <span id="pageAnswerButton4"></span>
+                <span id="pageAnswerButton5"></span>
+                <span id="pageAnswerButton6"></span>
+                <span id="pageAnswerButton7"></span>
+                <span><button name="navButton" value="+1" onclick="setAnswerPage('+1')">&#62;</button></span </table>
+        </div>
+
+    </section>
+
 </body>
 
-<script src="../../scripts/ajax.js"></script>
+<script src=" ../../scripts/ajax.js"></script>
 <script src="scripts/forum.js"></script>
 
 </html>
