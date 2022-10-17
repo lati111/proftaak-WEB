@@ -7,13 +7,13 @@ use Monolog\Level as Level;
 use Monolog\Logger as Logger;
 use Monolog\Handler\StreamHandler as StreamHandler;
 use Modules\Forum\Question\Question as Question;
+use Modules\Forum\QuestionHandler\QuestionHandler as QuestionHandler;
 
 session_start();
 
 require "../../vendor/autoload.php";
 
-include "functions/developerFunctions.php";
-include "functions/forumFunctions.php";
+include "functions/authenticate.php";
 
 $log = new Logger('name');
 $log->pushHandler(new StreamHandler('../log.txt', Level::Warning));
@@ -98,7 +98,8 @@ switch ($_POST["function"]) {
         break;
     case "getQuestionCount":
         try {
-            $response = getQuestionCount();
+            $questionHandler = new QuestionHandler();
+            $response = $questionHandler->getQuestionCount();
         } catch (Exception $e) {
             $response = "An error has occured, please try again later";
             $log->error($e->getMessage());
@@ -126,7 +127,8 @@ switch ($_POST["function"]) {
         }
 
         try {
-            $questions = getQuestions($parameters["offset"], $parameters["amount"]);
+            $questionHandler = new QuestionHandler();
+            $questions = $questionHandler->getQuestions($parameters["offset"], $parameters["amount"]);
         } catch (Exception | TypeError $e) {
             $response = "An error has occured, please try again later";
             $log->error($e->getMessage());
@@ -199,17 +201,22 @@ switch ($_POST["function"]) {
                     
             foreach ($answers as $answerData) {
                 $data = [];
-                $data["ID"] = $answer["idAnswer"];
-                $data["antwoord"] = $answer["antwoord"];
-                $data["votes"] = $answer["votes"];
-                $response[] = $data;
+                $data["ID"] = $answerData["idAnswer"];
+                $data["antwoord"] = $answerData["antwoord"];
+                $data["votes"] = $answerData["votes"];
 
-                $answer = new Answer($answer["idAnswer"], $question);
+                $answer = new Answer($answerData["idAnswer"], $question);
                 if(is_a($_SESSION["user"], "Developer")) {
-                    $_SESSION["user"]->HasVoted($answer);
+                    if ($_SESSION["user"]->HasVoted($answer)) {
+                        $data["hasVoted"] = true;
+                    } else {
+                        $data["hasVoted"] = false;
+                    }
                 } else {
                     $data["hasVoted"] = false;
                 }
+
+                $response[] = $data;
             }
 
         } catch (Exception | TypeError $e) {

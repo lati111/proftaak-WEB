@@ -137,7 +137,8 @@ async function setAnswerPage(pageNr) {
 
         const votes = document.createElement("td");
         const voteSpan = document.createElement("span"); voteSpan.textContent = answer["votes"]; votes.append(voteSpan);
-        const voteButton = document.createElement("button"); voteButton.textContent = "^"; votes.append(voteButton)
+        const voteButton = document.createElement("button"); voteButton.textContent = "^"; votes.append(voteButton);
+        if (answer["hasVoted"]) {votes.classList.add("voted")}
         row.append(votes)
 
         document.querySelector("#answerForum").append(row)
@@ -185,4 +186,13 @@ function setAnswerPageNav() {
         }
     }
 
+}
+
+function vote(this) {
+    if (this.classList.has("voted")) {
+        // this.classList.has("voted")
+    } else {
+        // const response = await ajax(toSrcPath, "getAnswers", { "questionID": currQuestion["ID"], "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
+        this.classList.add("voted")
+    }
 }
