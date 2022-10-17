@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-use Modules\Forum\Answer\Answer;
 use Monolog\Level as Level;
 use Monolog\Logger as Logger;
 use Monolog\Handler\StreamHandler as StreamHandler;
-use Modules\Forum\Question\Question as Question;
-use Modules\Forum\QuestionHandler\QuestionHandler as QuestionHandler;
+use Modules\Forum\QuestionHandler as QuestionHandler;
+use Modules\Forum\Question as Question;
+use Modules\Forum\Answer;
+
 
 session_start();
 
@@ -207,7 +208,7 @@ switch ($_POST["function"]) {
 
                 $answer = new Answer($answerData["idAnswer"], $question);
                 if(is_a($_SESSION["user"], "Developer")) {
-                    if ($_SESSION["user"]->HasVoted($answer)) {
+                    if ($answer->HasVoted($_SESSION["user"])) {
                         $data["hasVoted"] = true;
                     } else {
                         $data["hasVoted"] = false;

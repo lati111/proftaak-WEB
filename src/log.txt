@@ -24,3 +24,4 @@
 [2022-10-17T08:51:02.479771+02:00] name.ERROR: Modules\Forum\Answer\Answer::__construct(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\ajax.php on line 207 [] []
 [2022-10-17T08:51:38.695757+02:00] name.ERROR: Modules\Forum\Answer\Answer::__construct(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\ajax.php on line 207 [] []
 [2022-10-17T08:52:18.995567+02:00] name.ERROR: Modules\Forum\Answer\Answer::__construct(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\ajax.php on line 207 [] []
+[2022-10-17T10:00:06.958179+02:00] name.ERROR: No developer under that id found [] []

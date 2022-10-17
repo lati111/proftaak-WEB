@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Modules\Forum\Answer;
+namespace Modules\Forum;
 
 require "../../vendor/autoload.php";
 
 use Exception;
 use Modules\Database\Database;
-use Modules\Forum\Question\Question;
+use Modules\Developer\Developer;
+use Modules\Forum\Question;
 use PDO;
 
 class Answer
@@ -36,6 +37,54 @@ class Answer
         } else {
             throw new Exception("No answer under that id found", 1);
         }
+    }
+
+    public function vote(Developer $developer): bool
+    {
+        if ($this->hasVoted($developer)) {
+            throw new Exception("You already voted on this!", 2);
+        }
+
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $developerID = $developer->getID();
+        $sql = "INSERT INTO voteLog VALUES (:idAnswer, :idDeveloper)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":idDeveloper", $developerID);
+        $stmt->bindParam(":idAnswer", $this->id);
+        return $stmt->execute();
+    }
+
+    public function unvote(Developer $developer): bool
+    {
+        if (!$this->hasVoted($developer)) {
+            throw new Exception("You cannot delete something you haven't voted on!", 3);
+        }
+
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $developerID = $developer->getID();
+        $sql = "DELETE FROM voteLog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":idDeveloper", $developerID);
+        $stmt->bindParam(":idAnswer", $this->id);
+        return $stmt->execute();
+    }
+
+    public function hasVoted(Developer $developer): bool
+    {
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $developerID = $developer->getID();
+        $sql = "SELECT * FROM voteLog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":idDeveloper", $developerID);
+        $stmt->bindParam(":idAnswer", $this->id);
+        $stmt->execute();
+        return ($stmt->rowCount() > 0);
     }
 
     public function getID()

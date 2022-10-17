@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Modules\Forum\QuestionHandler;
+namespace Modules\Forum;
 
 require "../../vendor/autoload.php";
 
-use Exception;
-use Modules\Forum\Question;
 use Modules\Database\Database;
-use Modules\Forum\Answer\Answer;
 use PDO;
 
 class QuestionHandler {

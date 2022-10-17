@@ -188,11 +188,11 @@ function setAnswerPageNav() {
 
 }
 
-function vote(this) {
-    if (this.classList.has("voted")) {
+function vote(element) {
+    if (element.classList.has("voted")) {
         // this.classList.has("voted")
     } else {
         // const response = await ajax(toSrcPath, "getAnswers", { "questionID": currQuestion["ID"], "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
-        this.classList.add("voted")
+        element.classList.add("voted")
     }
 }

@@ -8,7 +8,7 @@ require "../../vendor/autoload.php";
 
 use Exception;
 use Modules\Database\Database;
-use Modules\Forum\Answer\Answer;
+use Modules\Forum\Answer;
 use PDO;
 
 class Developer
@@ -38,52 +38,8 @@ class Developer
         }
     }
 
-    public function hasVoted(Answer $answer): bool
-    {
-        $q_a = new Database("q&a");
-        $db = $q_a->getConn();
-
-        $answerID = $answer->getID();
-        $sql = "SELECT * FROM voteLog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(":idDeveloper", $this->id);
-        $stmt->bindParam(":idAnswer", $answerID);
-        $stmt->execute();
-        return ($stmt->rowCount() > 0);
-    }
-
-    public function vote(Answer $answer): bool
-    {
-        if ($this->hasVoted($answer)) {
-            throw new Exception("You already voted on this!", 2);
-        }
-
-        $q_a = new Database("q&a");
-        $db = $q_a->getConn();
-
-        $answerID = $answer->getID();
-        $sql = "INSERT INTO voteLog VALUES (:idAnswer, :idDeveloper)";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(":idDeveloper", $this->id);
-        $stmt->bindParam(":idAnswer", $answerID);
-        return $stmt->execute();
-    }
-
-    public function unvote(Answer $answer): bool
-    {
-        if (!$this->hasVoted($answer)) {
-            throw new Exception("You cannot delete something you haven't voted on!", 3);
-        }
-
-        $q_a = new Database("q&a");
-        $db = $q_a->getConn();
-
-        $answerID = $answer->getID();
-        $sql = "DELETE FROM voteLog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(":idDeveloper", $this->id);
-        $stmt->bindParam(":idAnswer", $answerID);
-        return $stmt->execute();
+    public function getID(): int {
+        return $this->id;
     }
 
     public function getName(): string
@@ -91,7 +47,7 @@ class Developer
         return $this->name;
     }
 
-    public function getNickname()
+    public function getNickname(): string
     {
         if ($this->nickname === null) {
             return $this->nickname;
@@ -101,7 +57,7 @@ class Developer
         }
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

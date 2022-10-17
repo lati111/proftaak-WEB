@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Forum\Question;
+namespace Modules\Forum;
 
 require "../../vendor/autoload.php";
 

@@ -3,10 +3,8 @@
     "autoload": {
         "psr-4": {
             "Modules\\Database\\": "src/backend/Modules/Database",
-            "Modules\\Forum\\QuestionHandler\\": "src/backend/Modules/Forum",
-            "Modules\\Forum\\Question\\": "src/backend/Modules/Forum",
-            "Modules\\Forum\\Answer\\": "src/backend/Modules/Forum",
-            "Modules\\Developer\\": "src/backend/Modules/Users"
+            "Modules\\Developer\\": "src/backend/Modules/Users",
+            "Modules\\Forum\\": "src/backend/Modules/Forum"
         }
     },
     "authors": [
