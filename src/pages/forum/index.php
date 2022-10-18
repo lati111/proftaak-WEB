@@ -25,7 +25,7 @@ session_start();
 
         </div>
     </section>
-    <li id="errors"></li>
+    <ul id="errors"></ul>
     <section id="mainBody">
         <div id="forumTableContainer">
             <table id="forum">
@@ -46,6 +46,7 @@ session_start();
     </section>
 
     <section id="questionBody" class="hidden">
+        <button onclick="closeQuestion()"><--</button>
         <div id="question"></div>
         <div id="answerContainer">
             <div id="answerForum">

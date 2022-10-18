@@ -18,7 +18,7 @@ async function init() {
 }
 
 async function openQuestion(questionID) {
-    currQuestion = currQuestions[questionID]
+    currQuestion = currQuestions[questionID];
     document.querySelector("#question").textContent = currQuestion["vraag"];
 
     document.querySelector("#mainBody").classList.add("hidden");
@@ -26,6 +26,11 @@ async function openQuestion(questionID) {
 
     setAnswerPageNav();
     setAnswerPage(1)
+}
+
+function closeQuestion() {
+    document.querySelector("#mainBody").classList.remove("hidden");
+    document.querySelector("#questionBody").classList.add("hidden");
 }
 
 async function setQuestionPage(pageNr) {
@@ -124,7 +129,7 @@ async function setAnswerPage(pageNr) {
     }
 
     document.querySelector("#answerForum").innerHTML = "";
-    currQuestions = [];
+    currAnswers = [];
     const answers = await ajax(toSrcPath, "getAnswers", {"questionID": currQuestion["ID"],  "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
     answers.forEach(answer => {
         const row = document.createElement("tr");
@@ -191,16 +196,21 @@ function setAnswerPageNav() {
 
 async function vote(e) {
     const element = e.target;
+    const voteCount = element.previousElementSibling;
     if (element.classList.contains("voted")) {
         const response = await ajax(toSrcPath, "unvote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
         if (response !== true) {
             showError("errors", response, 1000)
+        } else {
+            voteCount.textContent = "" + (parseInt(voteCount.textContent) - 1)
         }
         element.classList.remove("voted")
     } else {
         const response = await ajax(toSrcPath, "vote", {"answerID": parseInt(element.closest("tr").id.split("-")[1])});
         if (response !== true) {
             showError("errors", response, 1000)
+        } else {
+            voteCount.textContent = "" + (parseInt(voteCount.textContent) + 1)
         }
         element.classList.add("voted")
     }

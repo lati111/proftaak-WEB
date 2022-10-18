@@ -266,6 +266,7 @@ switch ($_POST["function"]) {
                     break;
             }
         }
+        $response = true;
         break;
     case "unvote":
         if (!is_null($parameters["answerID"])) {
