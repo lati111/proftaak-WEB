@@ -169,6 +169,8 @@ switch ($_POST["function"]) {
             if (!is_int($parameters["offset"])) {
                 $response = "Parameter 'offset' must be an int";
                 break;
+            } else if ($parameters["offset"] === 0) {
+                $parameters["offset"] = 1;
             }
         } else {
             $response = "Parameter 'offset' cannot be empty";
@@ -198,16 +200,16 @@ switch ($_POST["function"]) {
         try {
             $response = [];
             $question = new Question($parameters["questionID"]);
-            $answers = $question->getAnswers();
+            $answers = $question->getAnswers($parameters["offset"], $parameters["amount"]);
 
                     
             foreach ($answers as $answerData) {
                 $data = [];
                 $data["ID"] = $answerData["idAnswer"];
                 $data["antwoord"] = $answerData["antwoord"];
+                $data["votes"] = $answerData["votes"];
 
                 $answer = new Answer($answerData["idAnswer"], $question);
-                $data["votes"] = $answer->getVotes();
                 if(is_int($_SESSION["userID"])) {
                     $developer = new Developer($_SESSION["userID"]);
                     if ($answer->HasVoted($developer)) {
@@ -222,6 +224,56 @@ switch ($_POST["function"]) {
                 $response[] = $data;
             }
 
+        } catch (Exception | TypeError $e) {
+            switch ($e->getCode()) {
+                case 1:
+                    $response = $e->getMessage();
+                    $log->warning("user searched for question with ID " . $data["ID"] . ", no question with that ID found");
+                    break;
+                default:
+                    $response = "An error has occured, please try again later";
+                    $log->error($e->getMessage());
+                    break;
+            }
+        }
+        break;
+    case "getBestAnswer":
+        if (!is_null($parameters["questionID"])) {
+            if (!is_int($parameters["questionID"])) {
+                $response = "Parameter 'questionID' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'questionID' cannot be empty";
+            break;
+        }
+
+        try {
+            $response = [];
+            $question = new Question($parameters["questionID"]);
+            $answers = $question->getAnswers(0, 1);
+
+
+            foreach ($answers as $answerData) {
+                $data = [];
+                $data["ID"] = $answerData["idAnswer"];
+                $data["antwoord"] = $answerData["antwoord"];
+                $data["votes"] = $answerData["votes"];
+
+                $answer = new Answer($answerData["idAnswer"], $question);
+                if (is_int($_SESSION["userID"])) {
+                    $developer = new Developer($_SESSION["userID"]);
+                    if ($answer->HasVoted($developer)) {
+                        $data["hasVoted"] = true;
+                    } else {
+                        $data["hasVoted"] = false;
+                    }
+                } else {
+                    $data["hasVoted"] = false;
+                }
+
+                $response = $data;
+            }
         } catch (Exception | TypeError $e) {
             switch ($e->getCode()) {
                 case 1:

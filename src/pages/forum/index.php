@@ -48,10 +48,16 @@ session_start();
     <section id="questionBody" class="hidden">
         <button onclick="closeQuestion()"><--</button>
         <div id="question"></div>
+        <table id="bestAnswer"></table>
+        <form id="answerInput">
+            <textarea name="antwoord" cols="60" rows="7" placeholder="Your answer..."></textarea>
+            <br>
+            <button>Submit</button>
+        </form>
         <div id="answerContainer">
-            <div id="answerForum">
+            <table id="answerForum">
 
-            </div>
+            </table>
         </div>
         <div id="answerNav">
             <table id="answerTable">

@@ -36,14 +36,23 @@ class Question
         }
     }
 
-    public function getAnswers(): array
+    public function getAnswers(int $offset = null, int $amount = null): array
     {
         $q_a = new Database("q&a");
         $db = $q_a->getConn();
 
-        $sql = "SELECT * FROM answer WHERE idQuestion = :ID";
+        $sql = "SELECT idAnswer, antwoord, (SELECT count(votelog.idAnswer) FROM votelog WHERE votelog.idAnswer = answer.idAnswer) 
+            as votes FROM answer WHERE idQuestion = :ID  ORDER BY votes DESC
+        ";
+        if ($offset !== null && $amount !== null) {
+            $sql .= " LIMIT :amount OFFSET :offset";
+        }
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":ID", $this->id);
+        if ($offset !== null && $amount !== null) {
+            $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+            $stmt->bindValue(":amount", $amount, PDO::PARAM_INT);
+        }
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

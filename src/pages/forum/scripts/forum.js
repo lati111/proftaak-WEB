@@ -131,6 +131,24 @@ async function setAnswerPage(pageNr) {
     document.querySelector("#answerForum").innerHTML = "";
     currAnswers = [];
     const answers = await ajax(toSrcPath, "getAnswers", {"questionID": currQuestion["ID"],  "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
+    
+    const bestAnswer = await ajax(toSrcPath, "getBestAnswer", { "questionID": currQuestion["ID"]});
+    const row = document.createElement("tr");
+    row.classList.add("forumRow")
+    row.id = "answer-" + bestAnswer["ID"]
+
+    const antwoord = document.createElement("td");
+    antwoord.textContent = bestAnswer["antwoord"];
+    row.append(antwoord)
+    
+    const votes = document.createElement("td");
+    const voteSpan = document.createElement("span"); voteSpan.textContent = bestAnswer["votes"]; votes.append(voteSpan);
+    const voteButton = document.createElement("button"); voteButton.textContent = "^"; votes.append(voteButton);
+    voteButton.addEventListener("click", vote, false);
+    if (bestAnswer["hasVoted"]) { voteButton.classList.add("voted") }
+    row.append(votes)
+    document.querySelector("#bestAnswer").append(row)
+
     answers.forEach(answer => {
         const row = document.createElement("tr");
         row.classList.add("forumRow")
