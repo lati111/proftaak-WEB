@@ -138,7 +138,8 @@ async function setAnswerPage(pageNr) {
         const votes = document.createElement("td");
         const voteSpan = document.createElement("span"); voteSpan.textContent = answer["votes"]; votes.append(voteSpan);
         const voteButton = document.createElement("button"); voteButton.textContent = "^"; votes.append(voteButton);
-        if (answer["hasVoted"]) {votes.classList.add("voted")}
+        voteButton.addEventListener("click", vote, false);
+        if (answer["hasVoted"]) {voteButton.classList.add("voted")}
         row.append(votes)
 
         document.querySelector("#answerForum").append(row)
@@ -188,11 +189,19 @@ function setAnswerPageNav() {
 
 }
 
-function vote(element) {
-    if (element.classList.has("voted")) {
-        // this.classList.has("voted")
+async function vote(e) {
+    const element = e.target;
+    if (element.classList.contains("voted")) {
+        const response = await ajax(toSrcPath, "unvote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
+        if (response !== true) {
+            showError("errors", response, 1000)
+        }
+        element.classList.remove("voted")
     } else {
-        // const response = await ajax(toSrcPath, "getAnswers", { "questionID": currQuestion["ID"], "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
+        const response = await ajax(toSrcPath, "vote", {"answerID": parseInt(element.closest("tr").id.split("-")[1])});
+        if (response !== true) {
+            showError("errors", response, 1000)
+        }
         element.classList.add("voted")
     }
 }

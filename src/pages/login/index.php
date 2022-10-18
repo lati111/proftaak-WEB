@@ -28,4 +28,5 @@ session_start();
 </body>
 
 <script src="../../scripts/ajax.js"></script>
+<script src="../../scripts/general.js"></script>
 <script src="scripts/login.js"></script>

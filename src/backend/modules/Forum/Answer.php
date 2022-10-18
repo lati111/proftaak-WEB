@@ -17,23 +17,26 @@ class Answer
     private int $id;
     private Question $question;
     private string $antwoord;
-    private int $votes;
 
-    function __construct(int $id, Question $question)
+    function __construct(int $id, Question $question = null)
     {
         $this->id = $id;
-        $this->question = $question;
+        if (!is_null($question)) {
+            $this->question = $question;
+        }
         $q_a = new Database("q&a");
         $db = $q_a->getConn();
 
-        $sql = "SELECT antwoord, votes FROM answer WHERE idAnswer = :id";
+        $sql = "SELECT antwoord, idQuestion FROM answer WHERE idAnswer = :id";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             $developerData = $stmt->fetch(PDO::FETCH_ASSOC);
             $this->antwoord = $developerData["antwoord"];
-            $this->votes = $developerData["votes"];
+            if (is_null($question)) {
+                $this->question = new Question($developerData["idQuestion"]);
+            }
         } else {
             throw new Exception("No answer under that id found", 1);
         }
@@ -49,7 +52,7 @@ class Answer
         $db = $q_a->getConn();
 
         $developerID = $developer->getID();
-        $sql = "INSERT INTO voteLog VALUES (:idAnswer, :idDeveloper)";
+        $sql = "INSERT INTO votelog VALUES (:idAnswer, :idDeveloper)";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":idDeveloper", $developerID);
         $stmt->bindParam(":idAnswer", $this->id);
@@ -66,7 +69,7 @@ class Answer
         $db = $q_a->getConn();
 
         $developerID = $developer->getID();
-        $sql = "DELETE FROM voteLog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
+        $sql = "DELETE FROM votelog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":idDeveloper", $developerID);
         $stmt->bindParam(":idAnswer", $this->id);
@@ -79,7 +82,7 @@ class Answer
         $db = $q_a->getConn();
 
         $developerID = $developer->getID();
-        $sql = "SELECT * FROM voteLog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
+        $sql = "SELECT * FROM votelog WHERE idDeveloper = :idDeveloper AND idAnswer = :idAnswer";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(":idDeveloper", $developerID);
         $stmt->bindParam(":idAnswer", $this->id);
@@ -87,18 +90,30 @@ class Answer
         return ($stmt->rowCount() > 0);
     }
 
+    public function getVotes()
+    {
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $sql = "SELECT count(idAnswer) as votes FROM votelog WHERE idAnswer = :idAnswer";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":idAnswer", $this->id);
+        $stmt->execute();
+        return ($stmt->fetch(PDO::FETCH_ASSOC)["votes"]);
+    }
+
     public function getID()
     {
         return $this->ID;
     }
 
-    public function getVraag()
+    public function getAntwoord()
     {
-        return $this->vraag;
+        return $this->antwoord;
     }
 
-    public function getDeveloper()
+    public function getQuestion()
     {
-        return $this->developer;
+        return $this->question;
     }
 }

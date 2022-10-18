@@ -25,7 +25,7 @@ session_start();
 
         </div>
     </section>
-
+    <li id="errors"></li>
     <section id="mainBody">
         <div id="forumTableContainer">
             <table id="forum">
@@ -70,6 +70,7 @@ session_start();
 </body>
 
 <script src=" ../../scripts/ajax.js"></script>
+<script src="../../scripts/general.js"></script>
 <script src="scripts/forum.js"></script>
 
 </html>

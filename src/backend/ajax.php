@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Modules\Developer\Developer;
 use Monolog\Level as Level;
 use Monolog\Logger as Logger;
 use Monolog\Handler\StreamHandler as StreamHandler;
@@ -146,7 +147,7 @@ switch ($_POST["function"]) {
                 switch ($e->getCode()) {
                     case 1:
                         $response = $e->getMessage();
-                        $log->error("user searched for answer with ID" . $data["ID"] . ", no answer with that ID found");
+                        $log->warning("user searched for answer with ID" . $data["ID"] . ", no answer with that ID found");
                     default:
                         $response = "An error has occured, please try again later";
                         $log->error($e->getMessage());
@@ -204,11 +205,12 @@ switch ($_POST["function"]) {
                 $data = [];
                 $data["ID"] = $answerData["idAnswer"];
                 $data["antwoord"] = $answerData["antwoord"];
-                $data["votes"] = $answerData["votes"];
 
                 $answer = new Answer($answerData["idAnswer"], $question);
-                if(is_a($_SESSION["user"], "Developer")) {
-                    if ($answer->HasVoted($_SESSION["user"])) {
+                $data["votes"] = $answer->getVotes();
+                if(is_int($_SESSION["userID"])) {
+                    $developer = new Developer($_SESSION["userID"]);
+                    if ($answer->HasVoted($developer)) {
                         $data["hasVoted"] = true;
                     } else {
                         $data["hasVoted"] = false;
@@ -224,7 +226,7 @@ switch ($_POST["function"]) {
             switch ($e->getCode()) {
                 case 1:
                     $response = $e->getMessage();
-                    $log->error("user searched for question with ID " . $data["ID"] . ", no question with that ID found");
+                    $log->warning("user searched for question with ID " . $data["ID"] . ", no question with that ID found");
                     break;
                 default:
                     $response = "An error has occured, please try again later";
@@ -232,8 +234,71 @@ switch ($_POST["function"]) {
                     break;
             }
         }
+        break;
+    case "vote":
+        if (!is_null($parameters["answerID"])) {
+            if (!is_int($parameters["answerID"])) {
+                $response = "Parameter 'answerID' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'answerID' cannot be empty";
+            break;
+        }
 
+        try {
+            $answer = new Answer($parameters["answerID"]);
+            $developer = new Developer($_SESSION["userID"]);
+            $answer->vote($developer);
+        } catch (Exception | TypeError $e) {
+            switch ($e->getCode()) {
+                case 2:
+                    $response = $e->getMessage();
+                    $log->warning("User tried to vote on an anwer they voted on already");
+                    break;
+                case 1:
+                    $response = $e->getMessage();
+                    $log->warning("user searched for answer with ID " . $parameters["answerID"] . ", no answer with that ID found");
+                    break;
+                default:
+                    $response = "An error has occured, please try again later";
+                    $log->error($e->getMessage());
+                    break;
+            }
+        }
+        break;
+    case "unvote":
+        if (!is_null($parameters["answerID"])) {
+            if (!is_int($parameters["answerID"])) {
+                $response = "Parameter 'answerID' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'answerID' cannot be empty";
+            break;
+        }
 
+        try {
+            $answer = new Answer($parameters["answerID"]);
+            $developer = new Developer($_SESSION["userID"]);
+            $answer->unvote($developer);
+        } catch (Exception | TypeError $e) {
+            switch ($e->getCode()) {
+                case 3:
+                    $response = $e->getMessage();
+                    $log->warning("User tried to unvote on an anwer they haven't voted on already");
+                    break;
+                case 1:
+                    $response = $e->getMessage();
+                    $log->warning("user searched for answer with ID " . $parameters["answerID"] . ", no answer with that ID found");
+                    break;
+                default:
+                    $response = "An error has occured, please try again later";
+                    $log->error($e->getMessage());
+                    break;
+            }
+        }
+        $response = true;
         break;
     default:
     $response = "No such function available";
