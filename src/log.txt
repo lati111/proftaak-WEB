@@ -43,3 +43,6 @@
 [2022-10-18T10:25:10.188831+02:00] name.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'votes' in 'field list' [] []
 [2022-10-18T10:26:01.286328+02:00] name.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'votes' in 'field list' [] []
 [2022-10-18T10:26:31.464238+02:00] name.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'votes' in 'field list' [] []
+[2022-10-18T11:47:40.632760+02:00] answerPoster.ERROR: Modules\Forum\Question::__construct(): Argument #1 ($id) must be of type int, string given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\functions\postAnswer.php on line 25 [] []
+[2022-10-18T11:48:33.112040+02:00] answerPoster.ERROR: Modules\Forum\Question::__construct(): Argument #1 ($id) must be of type int, string given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\functions\postAnswer.php on line 25 [] []
+[2022-10-18T11:48:38.856067+02:00] answerPoster.ERROR: Modules\Forum\Question::__construct(): Argument #1 ($id) must be of type int, string given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\functions\postAnswer.php on line 25 [] []

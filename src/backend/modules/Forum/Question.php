@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Forum;
 
-require "../../vendor/autoload.php";
+require "/xampp/htdocs/proftaak-WEB/vendor/autoload.php";
 
 use Exception;
 use Modules\Database\Database as Database;
@@ -57,12 +57,24 @@ class Question
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getVraag()
+    public function postAnswer(string $antwoord): bool
+    {
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $sql = "INSERT INTO answer VALUES (DEFAULT, :antwoord, :idQuestion)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":antwoord", $antwoord);
+        $stmt->bindParam(":idQuestion", $this->id);
+        return $stmt->execute();
+    }
+
+    public function getVraag(): string
     {
         return $this->vraag;
     }
 
-    public function getDeveloper()
+    public function getDeveloper(): Developer
     {
         return $this->developer;
     }

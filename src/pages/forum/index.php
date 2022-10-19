@@ -46,31 +46,32 @@ session_start();
     </section>
 
     <section id="questionBody" class="hidden">
-        <button onclick="closeQuestion()"><--</button>
-        <div id="question"></div>
-        <table id="bestAnswer"></table>
-        <form id="answerInput">
-            <textarea name="antwoord" cols="60" rows="7" placeholder="Your answer..."></textarea>
-            <br>
-            <button>Submit</button>
-        </form>
-        <div id="answerContainer">
-            <table id="answerForum">
+        <button onclick="closeQuestion()">&#9166</button>
+                <div id="question"></div>
+                <table id="bestAnswer"></table>
+                <form id="answerInput"answerInput>
+                    <input type="hidden" id="questionID" name="questionID">
+                    <textarea name="antwoord" cols="60" rows="7" placeholder="Your answer..."></textarea>
+                    <br>
+                    <button id="anwswerSubmit" type="submit" name="submit" value="answerPost">Submit</button>
+                </form>
+                <div id="answerContainer">
+                    <table id="answerForum">
 
-            </table>
-        </div>
-        <div id="answerNav">
-            <table id="answerTable">
-                <span><button name="navButton" value="-1" onclick="setAnswerPage('-1')">&#60;</button></span>
-                <span id="pageAnswerButton1"></span>
-                <span id="pageAnswerButton2"></span>
-                <span id="pageAnswerButton3"></span>
-                <span id="pageAnswerButton4"></span>
-                <span id="pageAnswerButton5"></span>
-                <span id="pageAnswerButton6"></span>
-                <span id="pageAnswerButton7"></span>
-                <span><button name="navButton" value="+1" onclick="setAnswerPage('+1')">&#62;</button></span </table>
-        </div>
+                    </table>
+                </div>
+                <div id="answerNav">
+                    <table id="answerTable">
+                        <span><button name="navButton" value="-1" onclick="setAnswerPage('-1')">&#60;</button></span>
+                        <span id="pageAnswerButton1"></span>
+                        <span id="pageAnswerButton2"></span>
+                        <span id="pageAnswerButton3"></span>
+                        <span id="pageAnswerButton4"></span>
+                        <span id="pageAnswerButton5"></span>
+                        <span id="pageAnswerButton6"></span>
+                        <span id="pageAnswerButton7"></span>
+                        <span><button name="navButton" value="+1" onclick="setAnswerPage('+1')">&#62;</button></span </table>
+                </div>
 
     </section>
 

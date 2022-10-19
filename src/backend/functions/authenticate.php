@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require "../../vendor/autoload.php";
+require "/xampp/htdocs/proftaak-WEB/vendor/autoload.php";
 
 use Modules\Database\Database;
 use Modules\Developer\Developer;

@@ -17,7 +17,7 @@ require "../../vendor/autoload.php";
 
 include "functions/authenticate.php";
 
-$log = new Logger('name');
+$log = new Logger('AJAX');
 $log->pushHandler(new StreamHandler('../log.txt', Level::Warning));
 
 $parameters = [];
@@ -349,6 +349,38 @@ switch ($_POST["function"]) {
                     $response = "An error has occured, please try again later";
                     $log->error($e->getMessage());
                     break;
+            }
+        }
+        $response = true;
+        break;
+    case "postAnswer":
+        if (!is_null($parameters["antwoord"]) && $parameters["antwoord"] !== "") {
+            if (!is_string($parameters["antwoord"])) {
+                $response = "Parameter 'antwoord' must be an string";
+                break;
+            }
+        } else {
+            $response = "Parameter 'antwoord' cannot be empty";
+            break;
+        }
+
+        if (!is_null($parameters["questionID"])) {
+            if (!is_int($parameters["questionID"])) {
+                $response = "Parameter 'questionID' must be an int";
+                break;
+            }
+        } else {
+            $response = "Parameter 'questionID' cannot be empty";
+            break;
+        }
+
+        try {
+            $currUser = new Developer($_SESSION["userID"]);
+            $question = new Question(intval($parameters["questionID"]));
+            $question->postAnswer($parameters["antwoord"]);
+        } catch (Exception | TypeError $e) {
+            if ($e->getCode() !== 1) {
+                $log->error($e->getMessage());
             }
         }
         $response = true;

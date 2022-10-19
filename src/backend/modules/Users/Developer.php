@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Developer;
 
-require "../../vendor/autoload.php";
+require "/xampp/htdocs/proftaak-WEB/vendor/autoload.php";
 
 use Exception;
 use Modules\Database\Database;

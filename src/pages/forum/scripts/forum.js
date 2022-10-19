@@ -15,11 +15,13 @@ async function init() {
     questionTotal = await ajax(toSrcPath, "getQuestionCount");
     setQuestionPage(1);
     setQuestionPageNav();
+    document.querySelector("#anwswerSubmit").addEventListener("click", postAnswer, false);
 }
 
 async function openQuestion(questionID) {
     currQuestion = currQuestions[questionID];
     document.querySelector("#question").textContent = currQuestion["vraag"];
+    document.querySelector("#questionID").value = questionID;
 
     document.querySelector("#mainBody").classList.add("hidden");
     document.querySelector("#questionBody").classList.remove("hidden");
@@ -54,7 +56,7 @@ async function setQuestionPage(pageNr) {
     questions.forEach(question => {
         currQuestions[question["ID"]] = question;
         const row = document.createElement("tr");
-        row.setAttribute("onclick", "openQuestion("+question["ID"]+")");
+        row.setAttribute("onclick", "openQuestion(" + question["ID"] + ")");
         row.classList.add("forumRow")
         row.id = "question-" + question["ID"]
 
@@ -128,43 +130,19 @@ async function setAnswerPage(pageNr) {
         currAnwerPage = pageNr;
     }
 
+    document.querySelector("#bestAnswer").innerHTML = "";
     document.querySelector("#answerForum").innerHTML = "";
     currAnswers = [];
-    const answers = await ajax(toSrcPath, "getAnswers", {"questionID": currQuestion["ID"],  "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
-    
-    const bestAnswer = await ajax(toSrcPath, "getBestAnswer", { "questionID": currQuestion["ID"]});
-    const row = document.createElement("tr");
-    row.classList.add("forumRow")
-    row.id = "answer-" + bestAnswer["ID"]
+    const answers = await ajax(toSrcPath, "getAnswers", { "questionID": currQuestion["ID"], "offset": ((currAnwerPage * perPage) - perPage), "amount": perPage });
+    const bestAnswer = await ajax(toSrcPath, "getBestAnswer", { "questionID": currQuestion["ID"] });
 
-    const antwoord = document.createElement("td");
-    antwoord.textContent = bestAnswer["antwoord"];
-    row.append(antwoord)
-    
-    const votes = document.createElement("td");
-    const voteSpan = document.createElement("span"); voteSpan.textContent = bestAnswer["votes"]; votes.append(voteSpan);
-    const voteButton = document.createElement("button"); voteButton.textContent = "^"; votes.append(voteButton);
-    voteButton.addEventListener("click", vote, false);
-    if (bestAnswer["hasVoted"]) { voteButton.classList.add("voted") }
-    row.append(votes)
-    document.querySelector("#bestAnswer").append(row)
+    if (Object.keys(bestAnswer).length > 0) {
+        const row = generateAnswer(bestAnswer["ID"], bestAnswer["antwoord"], bestAnswer["votes"], bestAnswer["hasVoted"])
+        document.querySelector("#bestAnswer").append(row)
+    }
 
     answers.forEach(answer => {
-        const row = document.createElement("tr");
-        row.classList.add("forumRow")
-        row.id = "answer-" + answer["ID"]
-
-        const antwoord = document.createElement("td");
-        antwoord.textContent = answer["antwoord"];
-        row.append(antwoord)
-
-        const votes = document.createElement("td");
-        const voteSpan = document.createElement("span"); voteSpan.textContent = answer["votes"]; votes.append(voteSpan);
-        const voteButton = document.createElement("button"); voteButton.textContent = "^"; votes.append(voteButton);
-        voteButton.addEventListener("click", vote, false);
-        if (answer["hasVoted"]) {voteButton.classList.add("voted")}
-        row.append(votes)
-
+        const row = generateAnswer(answer["ID"], answer["antwoord"], answer["votes"], answer["hasVoted"])
         document.querySelector("#answerForum").append(row)
     });
 }
@@ -212,6 +190,46 @@ function setAnswerPageNav() {
 
 }
 
+function generateAnswer(answerID, antwoord, votes, hasVoted) {
+    const row = document.createElement("tr");
+    row.classList.add("forumRow")
+    row.id = "answer-" + answerID
+
+    const antwoordElement = document.createElement("td");
+    antwoordElement.textContent = antwoord;
+    row.append(antwoordElement)
+
+    const votesSection = document.createElement("td");
+    const voteSpan = document.createElement("span"); voteSpan.textContent = votes; votesSection.append(voteSpan);
+    const voteButton = document.createElement("button"); voteButton.textContent = "^"; votesSection.append(voteButton);
+    voteButton.addEventListener("click", vote, false);
+    if (hasVoted === true) { voteButton.classList.add("voted") }
+    row.append(votesSection)
+
+    return row
+}
+
+async function postAnswer(e) {
+    e.preventDefault()
+    const row = document.querySelector("#answerInput");
+    const antwoord = row.querySelector("textarea").value;
+    if (antwoord.length <= 5) {
+        showError("errors", "Answer must be at least 6 characters long")
+    } else {
+        const response = await ajax(toSrcPath, "postAnswer", { "antwoord": antwoord, "questionID": currQuestion["ID"] });
+        if (response === true) {
+            const row = generateAnswer(currQuestion["ID"], antwoord, 0, false)
+            document.querySelector("#answerForum").prepend(row)
+
+            const answerCounterElement = document.querySelector("#question-" + currQuestion["ID"]).lastElementChild;
+            answerCounterElement.textContent = "" + (parseInt(answerCounterElement.textContent) + 1)
+        } else {
+            showError("errors", response)
+        }
+    }
+
+}
+
 async function vote(e) {
     const element = e.target;
     const voteCount = element.previousElementSibling;
@@ -224,7 +242,7 @@ async function vote(e) {
         }
         element.classList.remove("voted")
     } else {
-        const response = await ajax(toSrcPath, "vote", {"answerID": parseInt(element.closest("tr").id.split("-")[1])});
+        const response = await ajax(toSrcPath, "vote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
         if (response !== true) {
             showError("errors", response, 1000)
         } else {
