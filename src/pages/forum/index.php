@@ -83,6 +83,5 @@ session_start();
 <script src=" ../../scripts/ajax.js"></script>
 <script src="../../scripts/general.js"></script>
 <script src="scripts/forum.js"></script>
-<script src="scripts/newQuestion.js"></script>
 
 </html>

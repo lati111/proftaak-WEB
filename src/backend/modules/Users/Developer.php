@@ -34,7 +34,7 @@ class Developer
             $this->nickname = $developerData["nickname"];
             $this->email = $developerData["email"];
         } else {
-            throw new Exception("No developer under that id found");
+            throw new Exception("No developer under that id found", 5);
         }
     }
 

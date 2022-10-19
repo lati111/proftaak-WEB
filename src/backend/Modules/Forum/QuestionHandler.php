@@ -6,6 +6,7 @@ namespace Modules\Forum;
 
 require "/xampp/htdocs/proftaak-WEB/vendor/autoload.php";
 
+use Modules\Developer\Developer;
 use Modules\Database\Database;
 use PDO;
 
@@ -34,5 +35,17 @@ class QuestionHandler {
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function postQuestion(string $vraag, Developer $poster): bool {
+        $q_a = new Database("q&a");
+        $db = $q_a->getConn();
+
+        $posterID = $poster->getID();
+        $sql = "INSERT INTO question VALUES (DEFAULT, :vraag, :idDeveloper)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":vraag", $vraag);
+        $stmt->bindParam(":idDeveloper", $posterID);
+        return $stmt->execute();
     }
 }

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require "/xampp/htdocs/proftaak-WEB/vendor/autoload.php";
+
 use Modules\Developer\Developer;
 
 session_start();
@@ -25,17 +27,17 @@ session_start();
             <h1>Proftaak forums</h1>
         </div>
 
-        
-    <div id="accountSection">
-    <?php 
-        try {
-            $user = new Developer($_SESSION["userID"]);
-        } catch (Exception | TypeError $e) {
-            header("Location: http://localhost/proftaak-WEB/src/pages/forum/login.php");
-            die();
-        }
-    ?>
-    </div>
+
+        <div id="accountSection">
+            <?php
+            try {
+                $user = new Developer($_SESSION["userID"]);
+            } catch (Exception | TypeError $e) {
+                header("Location: http://localhost/proftaak-WEB/src/pages/forum/login.php");
+                die();
+            }
+            ?>
+        </div>
     </section>
 
     <ul id="errors"></ul>
@@ -53,5 +55,6 @@ session_start();
 <script src=" ../../scripts/ajax.js"></script>
 <script src="../../scripts/general.js"></script>
 <script src="scripts/forum.js"></script>
+<script src="scripts/newQuestion.js"></script>
 
 </html>

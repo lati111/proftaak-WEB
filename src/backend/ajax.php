@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Modules\Developer\Developer;
 use Monolog\Level as Level;
 use Monolog\Logger as Logger;
+use Modules\Developer\Developer;
 use Monolog\Handler\StreamHandler as StreamHandler;
 use Modules\Forum\QuestionHandler as QuestionHandler;
 use Modules\Forum\Question as Question;
@@ -65,7 +65,7 @@ switch ($_POST["function"]) {
         if ($valid) {
             try {
                 $result = registerDeveloper($parameters["name"], $parameters["email"], $parameters["password"], $parameters["nickname"]);
-            } catch (Exception | TypeError $e) {
+            } catch (Exception | TypeError | Error $e) {
                 switch ($e->getCode()) {
                     case "23000":
                         $response = "E-23000";
@@ -88,7 +88,7 @@ switch ($_POST["function"]) {
         } else {
             try {
                 $response = login($parameters["email"], $parameters["password"]);
-            } catch (Exception | TypeError $e) {
+            } catch (Exception | TypeError | Error $e) {
                 switch ($e->getCode()) {
                     default:
                         $log->error($e->getMessage());
@@ -102,7 +102,7 @@ switch ($_POST["function"]) {
         try {
             $questionHandler = new QuestionHandler();
             $response = $questionHandler->getQuestionCount();
-        } catch (Exception $e) {
+        } catch (Exception | TypeError | Error $e) {
             $response = "An error has occured, please try again later";
             $log->error($e->getMessage());
         }
@@ -143,7 +143,7 @@ switch ($_POST["function"]) {
 
             try {
                 $question = new Question($data["ID"]);
-            } catch (Exception | TypeError $e) {
+            } catch (Exception | TypeError | Error $e) {
                 switch ($e->getCode()) {
                     case 1:
                         $response = $e->getMessage();
@@ -223,8 +223,7 @@ switch ($_POST["function"]) {
 
                 $response[] = $data;
             }
-
-        } catch (Exception | TypeError $e) {
+        } catch (Exception | TypeError | Error $e) {
             switch ($e->getCode()) {
                 case 1:
                     $response = $e->getMessage();
@@ -274,7 +273,7 @@ switch ($_POST["function"]) {
 
                 $response = $data;
             }
-        } catch (Exception | TypeError $e) {
+        } catch (Exception | TypeError | Error $e) {
             switch ($e->getCode()) {
                 case 1:
                     $response = $e->getMessage();
@@ -302,7 +301,7 @@ switch ($_POST["function"]) {
             $answer = new Answer($parameters["answerID"]);
             $developer = new Developer($_SESSION["userID"]);
             $answer->vote($developer);
-        } catch (Exception | TypeError $e) {
+        } catch (Exception | TypeError | Error $e) {
             switch ($e->getCode()) {
                 case 2:
                     $response = $e->getMessage();
@@ -335,7 +334,7 @@ switch ($_POST["function"]) {
             $answer = new Answer($parameters["answerID"]);
             $developer = new Developer($_SESSION["userID"]);
             $answer->unvote($developer);
-        } catch (Exception | TypeError $e) {
+        } catch (Exception | TypeError | Error $e) {
             switch ($e->getCode()) {
                 case 3:
                     $response = $e->getMessage();
@@ -378,9 +377,47 @@ switch ($_POST["function"]) {
             $currUser = new Developer($_SESSION["userID"]);
             $question = new Question(intval($parameters["questionID"]));
             $question->postAnswer($parameters["antwoord"]);
-        } catch (Exception | TypeError $e) {
-            if ($e->getCode() !== 1) {
-                $log->error($e->getMessage());
+        } catch (Exception | TypeError | Error $e) {
+            switch ($e->getCode()) {
+                case 1:
+                    $response = $e->getMessage();
+                    break;
+                case 5:
+                    $response = "E-002";
+                    break;
+                default:
+                    $log->error($e->getMessage());
+                    $response = "An error has occured, please try again later";
+            }
+        }
+        $response = true;
+        break;
+    case "postQuestion":
+        if (!is_null($parameters["question"]) && $parameters["question"] !== "") {
+            if (!is_string($parameters["question"])) {
+                $response = "Parameter 'question' must be an string";
+                break;
+            }
+        } else {
+            $response = "Parameter 'question' cannot be empty";
+            break;
+        }
+
+        try {
+            $currUser = new Developer($_SESSION["userID"]);
+            $questionHandler = new QuestionHandler();
+            $questionHandler->postQuestion($parameters["question"], $currUser);
+        } catch (Exception | TypeError | Error $e) {
+            switch ($e->getCode()) {
+                case 1:
+                    $response = $e->getMessage();
+                    break;
+                case 5:
+                    $response = "E-002";
+                    break;
+                default:
+                    $log->error($e->getMessage());
+                    $response = "An error has occured, please try again later";
             }
         }
         $response = true;
