@@ -28,6 +28,9 @@ session_start();
     <ul id="errors"></ul>
     <section id="mainBody">
         <div id="forumTableContainer">
+            <div>
+                <a href="newQuestion.php"><button>+</button></a>
+            </div>
             <table id="forum">
 
             </table>
@@ -47,31 +50,31 @@ session_start();
 
     <section id="questionBody" class="hidden">
         <button onclick="closeQuestion()">&#9166</button>
-                <div id="question"></div>
-                <table id="bestAnswer"></table>
-                <form id="answerInput"answerInput>
-                    <input type="hidden" id="questionID" name="questionID">
-                    <textarea name="antwoord" cols="60" rows="7" placeholder="Your answer..."></textarea>
-                    <br>
-                    <button id="anwswerSubmit" type="submit" name="submit" value="answerPost">Submit</button>
-                </form>
-                <div id="answerContainer">
-                    <table id="answerForum">
+        <div id="question"></div>
+        <table id="bestAnswer"></table>
+        <form id="answerInput" answerInput>
+            <input type="hidden" id="questionID" name="questionID">
+            <textarea name="antwoord" cols="60" rows="7" placeholder="Your answer..."></textarea>
+            <br>
+            <button id="anwswerSubmit" type="submit" name="submit" value="answerPost">Submit</button>
+        </form>
+        <div id="answerContainer">
+            <table id="answerForum">
 
-                    </table>
-                </div>
-                <div id="answerNav">
-                    <table id="answerTable">
-                        <span><button name="navButton" value="-1" onclick="setAnswerPage('-1')">&#60;</button></span>
-                        <span id="pageAnswerButton1"></span>
-                        <span id="pageAnswerButton2"></span>
-                        <span id="pageAnswerButton3"></span>
-                        <span id="pageAnswerButton4"></span>
-                        <span id="pageAnswerButton5"></span>
-                        <span id="pageAnswerButton6"></span>
-                        <span id="pageAnswerButton7"></span>
-                        <span><button name="navButton" value="+1" onclick="setAnswerPage('+1')">&#62;</button></span </table>
-                </div>
+            </table>
+        </div>
+        <div id="answerNav">
+            <table id="answerTable">
+                <span><button name="navButton" value="-1" onclick="setAnswerPage('-1')">&#60;</button></span>
+                <span id="pageAnswerButton1"></span>
+                <span id="pageAnswerButton2"></span>
+                <span id="pageAnswerButton3"></span>
+                <span id="pageAnswerButton4"></span>
+                <span id="pageAnswerButton5"></span>
+                <span id="pageAnswerButton6"></span>
+                <span id="pageAnswerButton7"></span>
+                <span><button name="navButton" value="+1" onclick="setAnswerPage('+1')">&#62;</button></span </table>
+        </div>
 
     </section>
 
@@ -80,5 +83,6 @@ session_start();
 <script src=" ../../scripts/ajax.js"></script>
 <script src="../../scripts/general.js"></script>
 <script src="scripts/forum.js"></script>
+<script src="scripts/newQuestion.js"></script>
 
 </html>

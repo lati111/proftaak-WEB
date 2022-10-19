@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+use Modules\Developer\Developer;
+
+session_start();
+?>
+<!doctype html>
+
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proftaak forum</title>
+
+    <link rel="stylesheet" href="../../styles/main.css">
+</head>
+
+<body onload="init2()">
+    <section id="header">
+        <div id="bannerSection">
+            <h1>Proftaak forums</h1>
+        </div>
+
+        
+    <div id="accountSection">
+    <?php 
+        try {
+            $user = new Developer($_SESSION["userID"]);
+        } catch (Exception | TypeError $e) {
+            header("Location: http://localhost/proftaak-WEB/src/pages/forum/login.php");
+            die();
+        }
+    ?>
+    </div>
+    </section>
+
+    <ul id="errors"></ul>
+    <a href="index.php"><button>&#9166</button></a>
+    <div id="question"></div>
+    <table id="bestAnswer"></table>
+    <form id="questionInput">
+        <textarea name="question" cols="60" rows="7" placeholder="Your answer..."></textarea>
+        <br>
+        <button id="questionSubmit" type="submit" name="submit">Submit</button>
+    </form>
+
+</body>
+
+<script src=" ../../scripts/ajax.js"></script>
+<script src="../../scripts/general.js"></script>
+<script src="scripts/forum.js"></script>
+
+</html>
