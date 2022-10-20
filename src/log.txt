@@ -46,3 +46,4 @@
 [2022-10-18T11:47:40.632760+02:00] answerPoster.ERROR: Modules\Forum\Question::__construct(): Argument #1 ($id) must be of type int, string given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\functions\postAnswer.php on line 25 [] []
 [2022-10-18T11:48:33.112040+02:00] answerPoster.ERROR: Modules\Forum\Question::__construct(): Argument #1 ($id) must be of type int, string given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\functions\postAnswer.php on line 25 [] []
 [2022-10-18T11:48:38.856067+02:00] answerPoster.ERROR: Modules\Forum\Question::__construct(): Argument #1 ($id) must be of type int, string given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\functions\postAnswer.php on line 25 [] []
+[2022-10-20T13:27:22.790734+02:00] AJAX.ERROR: Modules\Developer\Developer::__construct(): Argument #1 ($id) must be of type int, null given, called in C:\xampp\htdocs\proftaak-WEB\src\backend\ajax.php on line 302 [] []

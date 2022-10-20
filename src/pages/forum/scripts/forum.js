@@ -16,7 +16,12 @@ async function init() {
     setQuestionPage(1);
     setQuestionPageNav();
     document.querySelector("#anwswerSubmit").addEventListener("click", postAnswer, false);
-    // document.querySelector("#audio").play()
+
+    let array = [1, 2, 3];
+    setInterval(() => {
+        array.push(array.shift());
+        rotate()
+    }, 1);
 }
 
 async function openQuestion(questionID) {
@@ -232,23 +237,28 @@ async function postAnswer(e) {
 }
 
 async function vote(e) {
-    const element = e.target;
-    const voteCount = element.previousElementSibling;
-    if (element.classList.contains("voted")) {
-        const response = await ajax(toSrcPath, "unvote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
-        if (response !== true) {
-            showError("errors", response, 1000)
-        } else {
-            voteCount.textContent = "" + (parseInt(voteCount.textContent) - 1)
-        }
-        element.classList.remove("voted")
+    if (document.querySelector("#loggedIn").value === "false") {
+        showError("errors", "You must be logged in to vote on an asnwer", 1000)
     } else {
-        const response = await ajax(toSrcPath, "vote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
-        if (response !== true) {
-            showError("errors", response, 1000)
+        const element = e.target;
+        const voteCount = element.previousElementSibling;
+        if (element.classList.contains("voted")) {
+            const response = await ajax(toSrcPath, "unvote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
+            if (response !== true) {
+                showError("errors", response, 1000)
+            } else {
+                voteCount.textContent = "" + (parseInt(voteCount.textContent) - 1)
+            }
+            element.classList.remove("voted")
         } else {
-            voteCount.textContent = "" + (parseInt(voteCount.textContent) + 1)
+            const response = await ajax(toSrcPath, "vote", { "answerID": parseInt(element.closest("tr").id.split("-")[1]) });
+            if (response !== true) {
+                showError("errors", response, 1000)
+            } else {
+                voteCount.textContent = "" + (parseInt(voteCount.textContent) + 1)
+            }
+            element.classList.add("voted")
         }
-        element.classList.add("voted")
     }
+
 }

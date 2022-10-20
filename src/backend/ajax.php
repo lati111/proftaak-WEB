@@ -210,7 +210,7 @@ switch ($_POST["function"]) {
                 $data["votes"] = $answerData["votes"];
 
                 $answer = new Answer($answerData["idAnswer"], $question);
-                if(is_int($_SESSION["userID"])) {
+                if(isset($_SESSION["userID"])) {
                     $developer = new Developer($_SESSION["userID"]);
                     if ($answer->HasVoted($developer)) {
                         $data["hasVoted"] = true;
@@ -260,7 +260,7 @@ switch ($_POST["function"]) {
                 $data["votes"] = $answerData["votes"];
 
                 $answer = new Answer($answerData["idAnswer"], $question);
-                if (is_int($_SESSION["userID"])) {
+                if (isset($_SESSION["userID"])) {
                     $developer = new Developer($_SESSION["userID"]);
                     if ($answer->HasVoted($developer)) {
                         $data["hasVoted"] = true;

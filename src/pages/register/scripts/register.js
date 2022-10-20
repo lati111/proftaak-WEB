@@ -1,6 +1,15 @@
 const registerFormErrorId = "regTableError";
 const toSrcPath = "../../";
 
+
+function init() {
+    let array = [1, 2, 3];
+    setInterval(() => {
+        array.push(array.shift());
+        rotate()
+    }, 1);
+}
+
 async function registerDeveloper() {
     const table = document.getElementById("registerTable");
     const name = table.querySelector('[name="name"]').value;

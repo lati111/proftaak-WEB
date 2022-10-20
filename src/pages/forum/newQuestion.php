@@ -22,6 +22,13 @@ session_start();
 </head>
 
 <body onload="init2()">
+    <audio id="audio2" controls autoplay loop class="hidden">
+        <source src="../../music/wii_but_fucked4.mp3" type="audio/mp3">
+    </audio>
+
+    <div>
+        <img id="skullduggery" src="https://media.tenor.com/g1bZgt4-tL4AAAAC/skull.gif">
+    </div>
     <section id="header">
         <div id="bannerSection">
             <h1>Proftaak forums</h1>
@@ -33,7 +40,7 @@ session_start();
             try {
                 $user = new Developer($_SESSION["userID"]);
             } catch (Exception | TypeError $e) {
-                header("Location: http://localhost/proftaak-WEB/src/pages/forum/login.php");
+                header("Location: http://localhost/proftaak-WEB/src/pages/login");
                 die();
             }
             ?>

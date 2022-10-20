@@ -1,6 +1,14 @@
 const loginFormErrorId = "loginError";
 const toSrcPath = "../../";
 
+function init() {
+    let array = [1, 2, 3];
+    setInterval(() => {
+        array.push(array.shift());
+        rotate()
+    }, 1);
+}
+
 async function login() {
     const form = document.getElementById("loginForm");
     const email = form.querySelector('[name="email"]').value;

@@ -34,14 +34,22 @@ session_start();
         </div>
         <div id="accountSection">
             <?php
-            try {
-                $currUser = new Developer($_SESSION["userID"]);
-            } catch (Exception | Error | TypeError $e) {
-                if ($e->getCode() === 5) {
-                    echo "<a href='../login/'>log in</a>";
+            if (isset($_SESSION["userID"])) {
+                try {
+                    $currUser = new Developer($_SESSION["userID"]);
+                } catch (Exception | Error | TypeError $e) {
+                    if ($e->getCode() === 5) {
+                        echo "<a href='../login/'>log in</a>";
+                        echo "<input type='hidden' id='loggedIn' value='false'>";
+                    }
                 }
+                echo "<a href='../login/index.php?logout=true'>log out</a>";
+                echo "<input type='hidden' id='loggedIn' value='true'>";
+            } else {
+                echo "<a href='../login/'>log in</a>";
+                echo "<input type='hidden' id='loggedIn' value='false'>";
             }
-            echo "<a href='../login/index.php?logout=true'>log out</a>";
+
             ?>
         </div>
     </section>
