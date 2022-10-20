@@ -39,14 +39,14 @@ session_start();
                     $currUser = new Developer($_SESSION["userID"]);
                 } catch (Exception | Error | TypeError $e) {
                     if ($e->getCode() === 5) {
-                        echo "<a href='../login/'>log in</a>";
+                        echo "<a id='loginLink' href='../login/'>log in</a>";
                         echo "<input type='hidden' id='loggedIn' value='false'>";
                     }
                 }
-                echo "<a href='../login/index.php?logout=true'>log out</a>";
+                echo "<a id='loginLink' href='../login/index.php?logout=true'>log out</a>";
                 echo "<input type='hidden' id='loggedIn' value='true'>";
             } else {
-                echo "<a href='../login/'>log in</a>";
+                echo "<a id='loginLink' href='../login/'>log in</a>";
                 echo "<input type='hidden' id='loggedIn' value='false'>";
             }
 

@@ -32,7 +32,7 @@ textarea, button, input {
     font-family: Papyrus,fantasy; 
 }
 
-textarea, input {
+textarea, input, a {
     filter: brightness(0.6) drop-shadow(16px 16px 20px black) blur(0.5px);
     color: purple;
 }
@@ -92,4 +92,8 @@ tr:nth-child(8) td, tr:nth-child(9) td {
 
 td, h1, #question {
     background-color: rgba(238, 232, 170, 0.5);
+}
+
+#loginLink {
+    float: right;
 }
