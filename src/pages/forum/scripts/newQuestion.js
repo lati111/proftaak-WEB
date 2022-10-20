@@ -1,5 +1,10 @@
 function init2() {
     document.querySelector("#questionSubmit").addEventListener("click", postQuestion, false);
+    let array = [1, 2, 3];
+    setInterval(() => {
+        array.push(array.shift());
+        rotate()
+    }, 1);
 }
 
 async function postQuestion(e) {

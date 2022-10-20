@@ -34,7 +34,7 @@ if ($_GET["logout"] === "true") {
     <link rel="stylesheet" href="../../styles/main.css">
 </head>
 
-<body>
+<body onload="init()">
     <audio id="audio2" controls autoplay loop class="hidden">
         <source src="../../music/wii_but_fucked2.mp3" type="audio/mp3">
     </audio>
