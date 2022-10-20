@@ -1,7 +1,95 @@
+@import url('http://fonts.cdnfonts.com/css/vivaldi');
+
+body {
+    filter: drop-shadow(16px 16px 20px black);
+    font-family: Papyrus,fantasy; 
+    color: purple;
+    /* background-color: yellow; */
+    background-image: url("http://66.media.tumblr.com/c4b561113fd8fb5e382292092b580b5c/tumblr_oc5dbvOFO81uzwgsuo1_400.gif");
+    opacity: 90%;
+    font-size: 1.7em;
+}
+
+button {
+    filter: brightness(0.6) drop-shadow(16px 16px 20px black) blur(0.5px);
+    color: pink;
+}
+
+table {
+    filter: brightness(0.6) drop-shadow(16px 16px 20px black) blur(1px);
+}
+
 .hidden {
     display: none !important;
 }
 
 .voted {
     background-color: green;
+}
+
+textarea, button, input {
+    background-color: #4b1223;
+    font-family: Papyrus,fantasy; 
+}
+
+textarea, input {
+    filter: brightness(0.6) drop-shadow(16px 16px 20px black) blur(0.5px);
+    color: purple;
+}
+
+#question {
+    filter: brightness(0.6) drop-shadow(16px 16px 20px black) blur(1px);
+    color: orangered;                                            
+}
+
+h1 {
+    letter-spacing: 1em;
+}
+
+tr:nth-child(1) td, tr:nth-child(5) td {
+    font-size: 1.1em;
+}
+
+tr:nth-child(2) td, tr:nth-child(6) td {
+    font-size: 0.8em;
+}
+
+tr:nth-child(3) td, tr:nth-child(9) td {
+    font-size: 1.4em;
+}
+
+tr:nth-child(4) td, tr:nth-child(10) td {
+    font-size: 0.5em;
+}
+
+
+tr:nth-child(3) td, tr:nth-child(7) td {
+    color: maroon;
+}
+
+tr:nth-child(4) td, tr:nth-child(10) td {
+    color:  olivedrab;
+}
+
+tr:nth-child(1) td, tr:nth-child(5) td {
+    color: midnightblue;
+}
+
+tr:nth-child(6) td, tr:nth-child(2) td {
+    color: saddlebrown;
+}
+
+tr:nth-child(8) td, tr:nth-child(9) td {
+    color: goldenrod ;
+}
+
+#skullduggery {
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    z-index: 5;
+}
+
+td, h1, #question {
+    background-color: rgba(238, 232, 170, 0.5);
 }

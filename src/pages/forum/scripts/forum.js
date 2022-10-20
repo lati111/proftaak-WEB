@@ -16,6 +16,7 @@ async function init() {
     setQuestionPage(1);
     setQuestionPageNav();
     document.querySelector("#anwswerSubmit").addEventListener("click", postAnswer, false);
+    // document.querySelector("#audio").play()
 }
 
 async function openQuestion(questionID) {

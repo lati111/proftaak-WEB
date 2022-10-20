@@ -1,6 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
+use Modules\Developer\Developer;
+
 session_start();
 ?>
 <!doctype html>
@@ -17,12 +20,29 @@ session_start();
 </head>
 
 <body onload="init()">
+    <audio id="audio2" controls autoplay loop class="hidden">
+        <source src="../../music/wii_but_fucked.mp3" type="audio/mp3">
+    </audio>
+
+    <div>
+        <img id="skullduggery" src="https://media.tenor.com/g1bZgt4-tL4AAAAC/skull.gif">
+    </div>
+
     <section id="header">
         <div id="bannerSection">
             <h1>Proftaak forums</h1>
         </div>
         <div id="accountSection">
-
+            <?php
+            try {
+                $currUser = new Developer($_SESSION["userID"]);
+            } catch (Exception | Error | TypeError $e) {
+                if ($e->getCode() === 5) {
+                    echo "<a href='../login/'>log in</a>";
+                }
+            }
+            echo "<a href='../login/index.php?logout=true'>log out</a>";
+            ?>
         </div>
     </section>
     <ul id="errors"></ul>
