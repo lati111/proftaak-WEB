@@ -52,7 +52,7 @@ session_start();
     <div id="question"></div>
     <table id="bestAnswer"></table>
     <form id="questionInput">
-        <textarea name="question" cols="60" rows="7" placeholder="Your answer..."></textarea>
+        <textarea name="question" cols="60" rows="7" placeholder="Your question..."></textarea>
         <br>
         <button id="questionSubmit" type="submit" name="submit">Submit</button>
     </form>
