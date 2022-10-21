@@ -5,21 +5,20 @@ session_start();
 
 use Modules\Developer\Developer;
 
-if ($_GET["logout"] === "true") {
-    session_destroy();
-} else {
-    if (isset($_SESSION["userID"])) {
-        try {
-            $currUser = new Developer($_SESSION["userID"]);
-        } catch (Exception | Error | TypeError $e) {
-            if ($e->getCode() !== 5) {
-                header("Location: http://localhost/proftaak-WEB/src/pages/forum/");
-            }
-        }
-    } else {
-        header("Location: http://localhost/proftaak-WEB/src/pages/forum/");
-    }
+if (isset($_GET["logout"])) {
+    if ($_GET["logout"] === "true") {
+        session_destroy();
+    } 
 }
+
+if (isset($_SESSION["userID"])) {
+    try {
+        $currUser = new Developer($_SESSION["userID"]);
+    } catch (Exception | Error | TypeError $e) {
+    }
+    header("Location: http://localhost/proftaak-WEB/src/pages/forum/");
+}
+
 ?>
 <!doctype html>
 
