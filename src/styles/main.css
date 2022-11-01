@@ -1,5 +1,3 @@
-@import url('http://fonts.cdnfonts.com/css/vivaldi');
-
 body {
     filter: drop-shadow(16px 16px 20px black);
     font-family: Papyrus,fantasy; 
@@ -7,7 +5,6 @@ body {
     background-image: url("http://66.media.tumblr.com/c4b561113fd8fb5e382292092b580b5c/tumblr_oc5dbvOFO81uzwgsuo1_400.gif");
     opacity: 90%;
     font-size: 1.7em;
-    /* overflow: hidden; */
     cursor: url('data:image/x-icon;base64,AAACAAEAICACAAAAAAAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAgAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA29nXAAAAAAAAAAAAAABgAAAA2AAAAYgAAAMIAIAGBADADAwAoBgYAJAwMACIYGAAhMDAAILBgACBgwAAgAYAAIAMAACACAAAgAgAAIAEAACAAgAAgAEAAIAAgACAAEAAgAAgAIAB8ACABwAAgDwAAIDgAACHgAAAhgAAAJgAAADwAAAA/////////////5////8H///+B////Af/f/gD/z/wA/8f4Af/D8AP/weAH/8DAD//AQB//wAA//8AAf//AAP//wAH//8AB///AAP//wAB//8AAP//AAB//wAAP/8AAB//AAAP/wAA//8AA///AB///wB///8B////B////w////8='),  auto;
 }
 
@@ -38,10 +35,13 @@ textarea, input, a {
     color: purple;
 }
 
+input {
+    color: pink;
+}
+
 .input {
     filter: brightness(0.6) drop-shadow(16px 16px 20px black);
     font-size: 1.1em;
-    color: pink;
 }
 
 #question {
