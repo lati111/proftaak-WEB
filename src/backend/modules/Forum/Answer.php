@@ -90,7 +90,7 @@ class Answer
         return ($stmt->rowCount() > 0);
     }
 
-    public function getVotes()
+    public function getVotes(): int
     {
         $q_a = new Database("q&a");
         $db = $q_a->getConn();
@@ -102,17 +102,17 @@ class Answer
         return ($stmt->fetch(PDO::FETCH_ASSOC)["votes"]);
     }
 
-    public function getID()
+    public function getID(): int
     {
         return $this->ID;
     }
 
-    public function getAntwoord()
+    public function getAntwoord(): string
     {
         return $this->antwoord;
     }
 
-    public function getQuestion()
+    public function getQuestion(): Question
     {
         return $this->question;
     }

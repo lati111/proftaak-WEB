@@ -13,7 +13,7 @@ use PDO;
 
 class Developer extends User
 {
-    private string $nickname;
+    private ?string $nickname;
     private string $name;
 
     function __construct(int $id)
