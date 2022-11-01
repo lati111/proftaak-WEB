@@ -38,6 +38,12 @@ textarea, input, a {
     color: purple;
 }
 
+.input {
+    filter: brightness(0.6) drop-shadow(16px 16px 20px black);
+    font-size: 1.1em;
+    color: pink;
+}
+
 #question {
     filter: brightness(0.6) drop-shadow(16px 16px 20px black) blur(1px);
     color: orangered;                                            

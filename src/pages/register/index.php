@@ -5,21 +5,16 @@ session_start();
 
 use Modules\Developer\Developer;
 
-if ($_GET["logout"] === "true") {
-    session_destroy();
-} else {
-    if (isset($_SESSION["userID"])) {
-        try {
-            $currUser = new Developer($_SESSION["userID"]);
-        } catch (Exception | Error | TypeError $e) {
-            if ($e->getCode() !== 5) {
-                header("Location: http://localhost/proftaak-WEB/src/pages/forum/");
-            }
+if (isset($_SESSION["userID"])) {
+    try {
+        $currUser = new Developer($_SESSION["userID"]);
+    } catch (Exception | Error | TypeError $e) {
+        if ($e->getCode() !== 5) {
+            header("Location: http://localhost/proftaak-WEB/src/pages/forum/");
         }
-    } else {
-        header("Location: http://localhost/proftaak-WEB/src/pages/forum/");
     }
 }
+
 ?>
 <!doctype html>
 
@@ -53,23 +48,23 @@ if ($_GET["logout"] === "true") {
                 </tr>
                 <tr>
                     <td>Username:</td>
-                    <td><input type="text" name="username"></td>
+                    <td><input type="text" class="input" name="username"></td>
                 </tr>
                 <tr>
                     <td>Full name: *</td>
-                    <td><input type="text" name="name"></td>
+                    <td><input type="text" class="input" name="name"></td>
                 </tr>
                 <tr>
                     <td>Email address: *</td>
-                    <td><input type="email" name="email"></td>
+                    <td><input type="email" class="input" name="email"></td>
                 </tr>
                 <tr>
                     <td>Password: *</td>
-                    <td><input type="password" name="password1"></td>
+                    <td><input type="password" class="input" name="password1"></td>
                 </tr>
                 <tr>
                     <td>Repeat password: *</td>
-                    <td><input type="password" name="password2"></td>
+                    <td><input type="password" class="input" name="password2"></td>
                 </tr>
                 <tr>
                     <td colspan="2"><button onclick="registerDeveloper()">registreer</button></td>
