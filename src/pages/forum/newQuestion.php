@@ -26,7 +26,7 @@ session_start();
         <source src="../../music/wii_but_fucked4.mp3" type="audio/mp3">
     </audio>
 
-    <div>
+    <div id="skullDuggeryCoffin">
         <img id="skullduggery" src="https://media.tenor.com/g1bZgt4-tL4AAAAC/skull.gif">
     </div>
     <section id="header">

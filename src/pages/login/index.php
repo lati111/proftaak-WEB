@@ -10,7 +10,7 @@ if (isset($_GET["logout"])) {
     if ($_GET["logout"] === "true") {
         session_destroy();
         $loggedIn = false;
-    } 
+    }
 }
 
 if (isset($_SESSION["userID"]) && $loggedIn) {
@@ -39,8 +39,8 @@ if (isset($_SESSION["userID"]) && $loggedIn) {
     <audio id="audio2" controls autoplay loop class="hidden">
         <source src="../../music/wii_but_fucked2.mp3" type="audio/mp3">
     </audio>
-
-    <div>
+    
+    <div id="skullDuggeryCoffin">
         <img id="skullduggery" src="https://media.tenor.com/g1bZgt4-tL4AAAAC/skull.gif">
     </div>
 

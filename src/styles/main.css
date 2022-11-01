@@ -7,7 +7,7 @@ body {
     background-image: url("http://66.media.tumblr.com/c4b561113fd8fb5e382292092b580b5c/tumblr_oc5dbvOFO81uzwgsuo1_400.gif");
     opacity: 90%;
     font-size: 1.7em;
-    overflow: hidden;
+    /* overflow: hidden; */
     cursor: url('data:image/x-icon;base64,AAACAAEAICACAAAAAAAwAQAAFgAAACgAAAAgAAAAQAAAAAEAAQAAAAAAgAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA29nXAAAAAAAAAAAAAABgAAAA2AAAAYgAAAMIAIAGBADADAwAoBgYAJAwMACIYGAAhMDAAILBgACBgwAAgAYAAIAMAACACAAAgAgAAIAEAACAAgAAgAEAAIAAgACAAEAAgAAgAIAB8ACABwAAgDwAAIDgAACHgAAAhgAAAJgAAADwAAAA/////////////5////8H///+B////Af/f/gD/z/wA/8f4Af/D8AP/weAH/8DAD//AQB//wAA//8AAf//AAP//wAH//8AB///AAP//wAB//8AAP//AAB//wAAP/8AAB//AAAP/wAA//8AA///AB///wB///8B////B////w////8='),  auto;
 }
 
@@ -90,6 +90,16 @@ tr:nth-child(8) td, tr:nth-child(9) td {
     bottom: 0;
     right: 10%;
     z-index: 5;
+    
+}
+
+#skullDuggeryCoffin {
+    overflow: hidden;
+    position: absolute;
+    top: 125px;
+    right: 25px;
+    width: 500px;
+    height: 500px;
 }
 
 td, h1, #question {
