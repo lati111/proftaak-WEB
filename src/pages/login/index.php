@@ -5,13 +5,15 @@ session_start();
 
 use Modules\Developer\Developer;
 
+$loggedIn = true;
 if (isset($_GET["logout"])) {
     if ($_GET["logout"] === "true") {
         session_destroy();
+        $loggedIn = false;
     } 
 }
 
-if (isset($_SESSION["userID"])) {
+if (isset($_SESSION["userID"]) && $loggedIn) {
     try {
         $currUser = new Developer($_SESSION["userID"]);
     } catch (Exception | Error | TypeError $e) {

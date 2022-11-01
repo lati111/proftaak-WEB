@@ -85,6 +85,7 @@ tr:nth-child(8) td, tr:nth-child(9) td {
 }
 
 #skullduggery {
+    pointer-events: none;
     position: absolute;
     bottom: 0;
     right: 10%;
