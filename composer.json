@@ -4,6 +4,7 @@
         "psr-4": {
             "Modules\\Database\\": "src/backend/Modules/Database",
             "Modules\\Developer\\": "src/backend/Modules/Users",
+            "Modules\\User\\": "src/backend/Modules/Users",
             "Modules\\Forum\\": "src/backend/Modules/Forum"
         }
     },

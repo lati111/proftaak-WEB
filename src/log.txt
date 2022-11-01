@@ -1,0 +1,4 @@
+[2022-11-01T10:50:12.069545+01:00] AJAX.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'q&a.developeref24f234' doesn't exist [] []
+[2022-11-01T11:20:09.368847+01:00] AJAX.ERROR: Class "Modules\User\User" not found [] []
+[2022-11-01T11:20:10.386917+01:00] AJAX.ERROR: Class "Modules\User\User" not found [] []
+[2022-11-01T11:20:18.184875+01:00] AJAX.ERROR: Class "Modules\User\User" not found [] []

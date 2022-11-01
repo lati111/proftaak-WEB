@@ -8,15 +8,13 @@ require "/xampp/htdocs/proftaak-WEB/vendor/autoload.php";
 
 use Exception;
 use Modules\Database\Database;
-use Modules\Forum\Answer;
+use Modules\User\User;
 use PDO;
 
-class Developer
+class Developer extends User
 {
-    private int $id;
     private string $nickname;
     private string $name;
-    private string $email;
 
     function __construct(int $id)
     {
@@ -38,10 +36,6 @@ class Developer
         }
     }
 
-    public function getID(): int {
-        return $this->id;
-    }
-
     public function getName(): string
     {
         return $this->name;
@@ -55,10 +49,5 @@ class Developer
             $name = $this->getName();
             return $name;
         }
-    }
-
-    public function getEmail(): string
-    {
-        return $this->email;
     }
 }
